@@ -1,0 +1,79 @@
+﻿@model IdentityServer.Quickstart.Register.RegisterUserViewModel
+<div>
+    <div class="page-header">
+        <h1>User Registration</h1>
+    </div>
+
+    <partial name="_ValidationSummary" />
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">User Registration</h3>
+                </div>
+                <div class="panel-body">
+                    <form asp-controller="register" asp-action="RegisterUser">
+                        <fieldset>
+                            <div class="form-group">
+                                <label asp-for="Username"></label>
+                                <input class="form-control" placeholder="Username"
+                                       asp-for="Username" autofocus>
+                                <span class="text-danger" asp-validation-for="Username"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Password"></label>
+                                <input type="password" class="form-control"
+                                       placeholder="Password"
+                                       asp-for="Password" autocomplete="off">
+                                <span class="text-danger" asp-validation-for="Password"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="PasswordConfirmation"></label>
+                                <input type="password" class="form-control"
+                                       placeholder="Confirm your password"
+                                       asp-for="PasswordConfirmation" autocomplete="off">
+                                <span class="text-danger" asp-validation-for="PasswordConfirmation"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Email"></label>
+                                <input class="form-control" placeholder="Email"
+                                       asp-for="Email">
+                                <span class="text-danger" asp-validation-for="Email"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="GivenName"></label>
+                                <input class="form-control" placeholder="Given name"
+                                       asp-for="GivenName">
+                                <span class="text-danger" asp-validation-for="GivenName"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="FamilyName"></label>
+                                <input class="form-control" placeholder="Family name"
+                                       asp-for="FamilyName">
+                                <span class="text-danger" asp-validation-for="FamilyName"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Address"></label>
+                                <input class="form-control" placeholder="Address"
+                                       asp-for="Address">
+                                <span class="text-danger" asp-validation-for="Address"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Country"></label>
+                                <select class="form-control"
+                                        asp-for="Country"
+                                        asp-items="@Model.CountryCodes"></select>
+                                <span class="text-danger" asp-validation-for="Country"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <button class="btn btn-primary">Register</button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
