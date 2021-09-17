@@ -1,5 +1,6 @@
-﻿using IdentityServer.AdminUI.Services;
-using IdentityServer.AdminUI.Services.Contracts;
+﻿using IdentityServer.Areas.HeliosAdminUI.Services;
+using IdentityServer.Areas.HeliosAdminUI.Services.Base;
+using IdentityServer.Areas.HeliosAdminUI.Services.Contracts;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace IdentityServer.Extensions

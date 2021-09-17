@@ -33,12 +33,13 @@ namespace IdentityServer
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddRazorRuntimeCompilation(); ;
             services.AddHttpContextAccessor();
 
             services.AddIdentityFrameworkService(Configuration);
             services.AddIdentityServerService(Configuration);
 
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddScoped<ILocalUserService, LocalUserService>();
             services.AddAdminUIRepositries();
 
@@ -61,8 +62,23 @@ namespace IdentityServer
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
+
+                endpoints.MapAreaControllerRoute(
+                    name: "HeliosAdminUI",
+                    areaName: "HeliosAdminUI",
+                    pattern: "HeliosAdminUI/{controller=Home}/{action=Index}"
+                );
+
+                endpoints.MapControllerRoute(
+                    name: "areaRoute",
+                    pattern: "{area:exists}/{controller}/{action}"
+                );
+
                 endpoints.MapDefaultControllerRoute();
+
             });
+
+
         }
     }
 }
