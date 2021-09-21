@@ -10,41 +10,40 @@ namespace IdentityServer.Areas.HeliosAdminUI.Services.Base
 {
     public class BaseRepository<T> : IConfigurationRepository<T> where T : class
     {
-        protected readonly CustomConfigurationDbContext _customDbContext;
+        protected readonly CustomConfigurationDbContext _dbContext;
 
-        public BaseRepository(CustomConfigurationDbContext customDbContext )
+        public BaseRepository(CustomConfigurationDbContext dbContext)
         {
-            _customDbContext = customDbContext ?? throw new ArgumentNullException(nameof(customDbContext));
+            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
 
         public virtual async Task<IReadOnlyList<T>> GetAllAsync()
         {
-            var entities = await _customDbContext.Set<T>().ToListAsync();
-            return entities;
+            return await _dbContext.Set<T>().ToListAsync();
         }
 
 
         public virtual async Task<T> GetByIdAsync(int id)
         {
-            return await _customDbContext.Set<T>().FindAsync(id);
+            return await _dbContext.Set<T>().FindAsync(id);
         }
 
-        public virtual async Task<bool> AddAsync(T entity)
+        public async Task<bool> AddAsync(T entity)
         {
-            _customDbContext.Set<T>().Add(entity);
-            return await _customDbContext.SaveChangesAsync() > 0;
+            _dbContext.Set<T>().Add(entity);
+            return await _dbContext.SaveChangesAsync() > 0;
         }
 
         public virtual async Task<bool> UpdateAsync(T entity)
         {
-            _customDbContext.Entry(entity).State = EntityState.Modified;
-            return await _customDbContext.SaveChangesAsync() > 0;
+            _dbContext.Entry(entity).State = EntityState.Modified;
+            return await _dbContext.SaveChangesAsync() > 0;
         }
 
         public async Task<bool> DeleteAsync(T entity)
         {
-            _customDbContext.Set<T>().Remove(entity);
-            return await _customDbContext.SaveChangesAsync() > 0 ;
+            _dbContext.Set<T>().Remove(entity);
+            return await _dbContext.SaveChangesAsync() > 0 ;
         }
     }
 }

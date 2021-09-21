@@ -1,7 +1,6 @@
 ﻿using IdentityServer.Areas.HeliosAdminUI.Services.Base;
 using IdentityServer.Areas.HeliosAdminUI.Services.Contracts;
 using IdentityServer.Data;
-using IdentityServer4.EntityFramework.DbContexts;
 using IdentityServer4.EntityFramework.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -17,13 +16,13 @@ namespace IdentityServer.Areas.HeliosAdminUI.Services
         }
         public override async Task<IReadOnlyList<IdentityResource>> GetAllAsync()
         {
-            var entities = await _customDbContext.IdentityResources.Include(i => i.UserClaims).ToListAsync();
+            var entities = await _dbContext.IdentityResources.Include(i => i.UserClaims).ToListAsync();
             return entities;
         }
 
         public override async Task<IdentityResource> GetByIdAsync(int id)
         {
-            var entity = await _customDbContext.IdentityResources
+            var entity = await _dbContext.IdentityResources
                 .Include(i => i.UserClaims)
                 .Where(i => i.Id == id)
                 .FirstOrDefaultAsync();
@@ -33,7 +32,7 @@ namespace IdentityServer.Areas.HeliosAdminUI.Services
 
         public override async Task<bool> UpdateAsync(IdentityResource entity)
         {
-            var existingParent = await _customDbContext.IdentityResources
+            var existingParent = await _dbContext.IdentityResources
                     .Where(i => i.Id == entity.Id)
                     .Include(c => c.UserClaims)
                     .FirstOrDefaultAsync();
@@ -41,13 +40,13 @@ namespace IdentityServer.Areas.HeliosAdminUI.Services
             if (existingParent != null)
             {
                 // Update parent
-                _customDbContext.Entry(existingParent).CurrentValues.SetValues(entity);
+                _dbContext.Entry(existingParent).CurrentValues.SetValues(entity);
 
                 // Delete children
                 foreach (var existingChild in existingParent.UserClaims.ToList())
                 {
                     if (!entity.UserClaims.Any(c => c.Type == existingChild.Type && c.IdentityResourceId == existingChild.IdentityResourceId))
-                        _customDbContext.IdentityResourceClaims.Remove(existingChild);
+                        _dbContext.IdentityResourceClaims.Remove(existingChild);
                 }
 
                 // Update and Insert children
@@ -75,7 +74,7 @@ namespace IdentityServer.Areas.HeliosAdminUI.Services
 
             }
 
-            return await _customDbContext.SaveChangesAsync() > 0;
+            return await _dbContext.SaveChangesAsync() > 0;
         }
     }
 }
