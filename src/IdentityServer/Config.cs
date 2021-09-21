@@ -17,6 +17,7 @@ namespace IdentityServer
               new IdentityResources.Profile(),
               new IdentityResources.Address(),
               new IdentityResources.Email(),
+              
                 new IdentityResource(
                     "country",
                     "The country you're living in",

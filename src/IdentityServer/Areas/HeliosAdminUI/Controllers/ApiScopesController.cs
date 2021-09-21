@@ -1,11 +1,7 @@
 ﻿using AutoMapper;
-using IdentityServer.Areas.HeliosAdminUI.Models;
-using IdentityServer.Areas.HeliosAdminUI.Models.Create.ApiScopes;
-using IdentityServer.Areas.HeliosAdminUI.Models.Update.ApiScopes;
-using IdentityServer.Areas.HeliosAdminUI.Models.ViewModel;
+using IdentityServer.Areas.HeliosAdminUI.Models.ApiScopes;
 using IdentityServer.Areas.HeliosAdminUI.Services.Contracts;
 using IdentityServer4.EntityFramework.Entities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -24,13 +20,12 @@ namespace IdentityServer.Areas.HeliosAdminUI.Controllers
             _mapper = mapper;
         }
 
-        public  IActionResult Index()
+        public IActionResult Index()
         {
             return View();
         }
 
 
-        // GET: ApiScopesController
         public async Task<IActionResult> GetAll(bool isSuccess, bool error = false)
         {
             ViewBag.Error = error;
@@ -69,7 +64,7 @@ namespace IdentityServer.Areas.HeliosAdminUI.Controllers
 
             if (created)
             {
-                return RedirectToAction(nameof(Create), new { isSuccess = true});
+                return RedirectToAction(nameof(Create), new { isSuccess = true });
             }
 
             ModelState.AddModelError(string.Empty, "An error occured while adding your api scope. Please contact your administrator.");
@@ -106,7 +101,7 @@ namespace IdentityServer.Areas.HeliosAdminUI.Controllers
             var updated = await _apiScopeRepository.UpdateAsync(entity);
             if (!updated)
             {
-                ModelState.AddModelError(string.Empty, "An error occured while adding your api scope. Please contact your administrator.");
+                ModelState.AddModelError(string.Empty, "An error occured while updating your api scope. Please contact your administrator.");
                 return View(model);
             }
 

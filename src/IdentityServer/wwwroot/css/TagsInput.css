@@ -1,0 +1,72 @@
+﻿/*  Just add some styles to make it beautiful  */
+*,
+::after,
+::before {
+    box-sizing: border-box;
+}
+
+.centered{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.keyHandler > button {
+    float: left;
+    height: 40px;
+    width: 40px;
+    line-height: 40px;
+    border: none;
+    outline: none !important;
+    background: #007bff;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    font-size: 26pt;
+}
+
+.keyHandler > input {
+    float: left;
+    width: calc(100% - 45px);
+    margin: 0 0 0 5px;
+    height: 38px;
+    padding: 0 14px;
+    background: #ffffff;
+    border: none;
+    outline: none !important;
+    font-family: monospace;
+    border-bottom: 2px solid #673AB7;
+}
+
+.addedKeysHolder {
+    float: left;
+    width: 100%;
+    height: auto;
+    margin: 8px 0 0 0;
+}
+
+.addedKeysHolder > span {
+    background: #007bff;
+    padding: 8px 10px 8px 30px;
+    float: left;
+    margin: 2px;
+    border-radius: 100px;
+    color: white;
+    font-family: monospace;
+    font-size: 12pt;
+    position: relative;
+    cursor: pointer;
+}
+
+.addedKeysHolder > span:after {
+    content: "\d7";
+    position: absolute;
+    left: 12px;
+    top: 0;
+    bottom: 0;
+    width: 14px;
+    height: 14px;
+    line-height: .5;
+    margin: auto;
+    font-size: 17pt;
+}

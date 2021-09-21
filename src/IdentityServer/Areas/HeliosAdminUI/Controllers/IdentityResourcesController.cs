@@ -1,20 +1,41 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using IdentityServer.Areas.HeliosAdminUI.Helpers;
+using IdentityServer.Areas.HeliosAdminUI.Models.IdentityResources;
+using IdentityServer.Areas.HeliosAdminUI.Services.Contracts;
+using IdentityServer4.EntityFramework.Entities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace IdentityServer.Areas.HeliosAdminUI.Controllers
 {
+    [Area("HeliosAdminUI")]
     public class IdentityResourcesController : Controller
     {
+        private readonly IIdentityResourceRepository _identityResourceRepository;
+        private readonly IMapper _mapper;
+
+        public IdentityResourcesController(IIdentityResourceRepository identityResourceRepository, IMapper mapper)
+        {
+            _identityResourceRepository = identityResourceRepository;
+            _mapper = mapper;
+        }
         // GET: IdentityResourcesController
         public ActionResult Index()
         {
             return View();
         }
 
+        public async Task<IActionResult> GetAll(bool isSuccess = false)
+        {
+            ViewBag.isSuccess = isSuccess;
+            var entities = await _identityResourceRepository.GetAllAsync();
+            var vmProp = _mapper.Map<List<IdentityResourceViewModel>>(entities);
+            var vm = new IdentityResourceListViewModel() { IdentityResourcesList = vmProp };
+            return View(vm);
+        }
         // GET: IdentityResourcesController/Details/5
         public ActionResult Details(int id)
         {
@@ -22,66 +43,99 @@ namespace IdentityServer.Areas.HeliosAdminUI.Controllers
         }
 
         // GET: IdentityResourcesController/Create
-        public ActionResult Create()
+        public ActionResult Create(bool isSuccess = false)
         {
-            return View();
+            ViewBag.isSuccess = isSuccess;
+            var vm = new CreateIdentityResourceViewModel();
+            return View(vm);
         }
 
         // POST: IdentityResourcesController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create(CreateIdentityResourceViewModel model)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                return View(model);
             }
-            catch
+
+            var entity = _mapper.Map<IdentityResource>(model);
+            var created = await _identityResourceRepository.AddAsync(entity);
+            if (created)
             {
-                return View();
+                return RedirectToAction(nameof(Create), new { isSuccess = true });
             }
+            ModelState.AddModelError(string.Empty, "An error occured while adding your api scope. Please contact your administrator.");
+            return View(model);
         }
 
+
         // GET: IdentityResourcesController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            return View();
+            var entity = await _identityResourceRepository.GetByIdAsync(id);
+            if (!(entity != null))
+            {
+                return RedirectToAction(nameof(GetAll), new { Error = true });
+            }
+            var vm = _mapper.Map<UpdateIdentityResourceViewModel>(entity);
+            return View(vm);
         }
 
         // POST: IdentityResourcesController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(int id, UpdateIdentityResourceViewModel model)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                return View(model);
             }
-            catch
+            if (model.Id != id)
             {
-                return View();
+                return RedirectToAction(nameof(GetAll), new { Error = true });
             }
+            model.UserClaims = IdentityResourceClaimsHelper.CreateClaims(model.UserClaimsString);
+            var entity = _mapper.Map<IdentityResource>(model);
+            var updated = await _identityResourceRepository.UpdateAsync(entity);
+            if (!updated)
+            {
+                ModelState.AddModelError(string.Empty, "An error occured while updating your api scope. Please contact your administrator.");
+                return View(model);
+            }
+
+            return RedirectToAction(nameof(GetAll), new { isSuccess = true });
         }
 
         // GET: IdentityResourcesController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var entity = await _identityResourceRepository.GetByIdAsync(id.Value);
+            if (entity == null)
+            {
+                return NotFound();
+            }
+            var vm = _mapper.Map<IdentityResourceViewModel>(entity);
+            return View(vm);
         }
 
-        // POST: IdentityResourcesController/Delete/5
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            try
+            var entity = await _identityResourceRepository.GetByIdAsync(id);
+            var deleted = await _identityResourceRepository.DeleteAsync(entity);
+            if (!deleted)
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(GetAll), new { Error = true });
             }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction(nameof(GetAll), new { isSuccess = true });
         }
     }
 }

@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
-using IdentityServer.Areas.HeliosAdminUI.Models.Create.ApiScopes;
-using IdentityServer.Areas.HeliosAdminUI.Models.Update.ApiScopes;
-using IdentityServer.Areas.HeliosAdminUI.Models.ViewModel;
+using IdentityServer.Areas.HeliosAdminUI.Models.ApiScopes;
+using IdentityServer.Areas.HeliosAdminUI.Models.IdentityResources;
 using IdentityServer4.EntityFramework.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace IdentityServer.Areas.HeliosAdminUI.Profiles
 {
@@ -13,6 +15,15 @@ namespace IdentityServer.Areas.HeliosAdminUI.Profiles
             CreateMap<ApiScope, ApiScopeViewModel>();
             CreateMap<CreateApiScopeModel, ApiScope>();
             CreateMap<UpdateApiScopeViewModel, ApiScope>().ReverseMap();
+
+
+
+            CreateMap<IdentityResource, IdentityResourceViewModel>()
+                .ForMember(m => m.UserClaims, opt => opt.MapFrom(src => src.UserClaims.Select(u => u.Type)));
+            CreateMap<IdentityResource, UpdateIdentityResourceViewModel>().ReverseMap();
+
+            CreateMap<CreateIdentityResourceViewModel, IdentityResource>();
         }
+
     }
 }

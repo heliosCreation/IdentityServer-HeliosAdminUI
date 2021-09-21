@@ -1,0 +1,120 @@
+﻿@model IdentityServer.Areas.HeliosAdminUI.Models.IdentityResources.CreateIdentityResourceViewModel;
+@section style{
+
+    <link href="~/css/TagsInput.css" rel="stylesheet" />
+}
+@{
+    if (ViewBag.isSuccess == true)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            Your new identity resource has been added successfully. <br />
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+}
+<a asp-action="GetAll" class="btn btn-primary mb-3"> <i class="bi bi-arrow-left-circle-fill"></i> Go back </a>
+
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">Create new Identity Resource</h4>
+        <hr />
+        <form method="post" asp-controller="IdentityResources" asp-action="Create">
+            <div class="row">
+                <div class="form-group col-6">
+                    <label asp-for="Name" class="col-form-label"></label>
+                    <div>
+                        <input asp-for="Name" class="form-control" />
+                    </div>
+                    <span class="text-danger" asp-validation-for="Name"></span>
+                </div>
+
+                <div class="form-group col-6">
+                    <label asp-for="DisplayName" class="col-form-label"></label>
+                    <div>
+                        <input asp-for="DisplayName" class="form-control" />
+                    </div>
+                    <span class="text-danger" asp-validation-for="DisplayName"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-6">
+                    <label asp-for="UserClaimsString" class="col-form-label"></label>
+
+                    <div class="keyHandler d-flex">
+                        <button class="btn centered" type="button" id="addKey"> <i class="bi bi-plus"></i> </button>
+                        <input type="text" placeholder="Keyword + Enter" id="keysInput">
+                    </div>
+                    <div class="addedKeysHolder"></div>
+
+
+                    <!-- Just give this input the name="etc" attribute -->
+                    <input asp-for="UserClaimsString" type="hidden">
+                    <span class="text-danger" asp-validation-for="UserClaims"></span>
+
+                </div>
+            </div>
+            <hr />
+
+            <div class="form-group row">
+
+                <div class="col-2">
+                    <button class="btn btn-success btn-block">Create <i class="bi bi-check-square ml-1"></i></button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+
+        //call addKey() by pressing Enter (  This block is optional!  )
+        $(window).keydown(function (event) {
+            if (event.keyCode == 13) {
+                event.preventDefault();
+                addKey();
+                return false;
+            }
+        });
+
+        //call addKey() by pressing button
+        $('#addKey').click(function (e) {
+            addKey();
+        });
+
+
+        //Add key function
+        function addKey() {
+            let key = $('#keysInput').val()
+            if (key != '') {
+                let tag = document.createElement('span')
+                $(tag).append(key)
+                $(tag).attr('onclick', `$(this).remove();removeKey("${key}");`)
+                $('.addedKeysHolder').append(tag)
+                $('#keysInput').val('')
+                resetKey()
+            }
+        }
+
+        //According to my goals, this function was equal to the resetKey(). But here I put it in a separate block, so you can easily customize it if you want
+        function removeKey() {
+            resetKey()
+        }
+
+        //Reset all keys
+        function resetKey() {
+            $('#UserClaimsString').val('')
+            for (let i = 1; i <= $('.addedKeysHolder span').length; i++) {
+                let theKey = $(`.addedKeysHolder span:nth-child(${i})`).text()
+                let prevVal = $('#UserClaimsString').val() + ','
+                $('#UserClaimsString').val(prevVal + theKey)
+            }
+            $('#UserClaimsString').val($('#UserClaimsString').val());
+            $('#keysInput').focus();
+        }
+    </script>
+}

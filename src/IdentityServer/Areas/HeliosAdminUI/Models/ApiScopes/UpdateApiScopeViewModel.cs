@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace IdentityServer.Areas.HeliosAdminUI.Models.Update.ApiScopes
+namespace IdentityServer.Areas.HeliosAdminUI.Models.ApiScopes
 {
     public class UpdateApiScopeViewModel
     {

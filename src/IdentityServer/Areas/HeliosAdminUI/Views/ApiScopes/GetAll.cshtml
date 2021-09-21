@@ -1,4 +1,4 @@
-﻿@model IdentityServer.Areas.HeliosAdminUI.Models.ApiScopesListViewModel;
+﻿@model IdentityServer.Areas.HeliosAdminUI.Models.ApiScopes.ApiScopesListViewModel;
 @{
     if (ViewBag.Error == true)
     {
@@ -43,22 +43,23 @@
         <tbody>
             @foreach (var apiScope in Model.ApiScopes)
             {
-                <tr>
-                    <td>@apiScope.DisplayName</td>
-                    <td>@apiScope.Description</td>
-                    <td>@apiScope.Enabled</td>
-                    <td>@apiScope.Required</td>
-                    <td>@apiScope.Emphasize</td>
-                    <td>@apiScope.ShowInDiscoveryDocument</td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@apiScope.Id" class="btn btn-success text-white">
-                            <i class="bi bi-pen"></i>
-                        </a>
-                        <a asp-action="Delete" asp-route-id="@apiScope.Id" class="btn btn-danger text-white">
-                            <i class="bi bi-trash"></i>
-                        </a>
-                    </td>
-                </tr>
+            <tr>
+                <td>@apiScope.Name</td>
+                <td>@apiScope.DisplayName</td>
+                <td>@apiScope.Description</td>
+                <td>@apiScope.Enabled</td>
+                <td>@apiScope.Required</td>
+                <td>@apiScope.Emphasize</td>
+                <td>@apiScope.ShowInDiscoveryDocument</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@apiScope.Id" class="btn btn-success text-white">
+                        <i class="bi bi-pen"></i>
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@apiScope.Id" class="btn btn-danger text-white">
+                        <i class="bi bi-trash"></i>
+                    </a>
+                </td>
+            </tr>
             }
         </tbody>
     </table>

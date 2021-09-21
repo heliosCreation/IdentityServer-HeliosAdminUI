@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace IdentityServer.Areas.HeliosAdminUI.Controllers
 {
+    [Area("HeliosAdminUI")]
     public class UserManagementController : Controller
     {
         // GET: UserManagementController

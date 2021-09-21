@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace IdentityServer.Areas.HeliosAdminUI.Models.ViewModel
+namespace IdentityServer.Areas.HeliosAdminUI.Models.ApiScopes
 {
     public class ApiScopeViewModel
     {

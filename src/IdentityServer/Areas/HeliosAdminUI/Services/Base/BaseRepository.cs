@@ -16,9 +16,10 @@ namespace IdentityServer.Areas.HeliosAdminUI.Services.Base
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
 
-        public async Task<IReadOnlyList<T>> GetAllAsync()
+        public virtual async Task<IReadOnlyList<T>> GetAllAsync()
         {
-            return await _dbContext.Set<T>().ToListAsync();
+            var entities = await _dbContext.Set<T>().ToListAsync();
+            return entities;
         }
 
 
@@ -33,7 +34,7 @@ namespace IdentityServer.Areas.HeliosAdminUI.Services.Base
             return await _dbContext.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> UpdateAsync(T entity)
+        public virtual async Task<bool> UpdateAsync(T entity)
         {
             _dbContext.Entry(entity).State = EntityState.Modified;
             return await _dbContext.SaveChangesAsync() > 0;
