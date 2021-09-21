@@ -17,6 +17,7 @@ using System;
 using System.Reflection;
 using IdentityServer.Services;
 using IdentityServer.Extensions;
+using IdentityServer4.EntityFramework.Interfaces;
 
 namespace IdentityServer
 {
@@ -38,6 +39,9 @@ namespace IdentityServer
 
             services.AddIdentityFrameworkService(Configuration);
             services.AddIdentityServerService(Configuration);
+
+            services.AddScoped<IConfigurationDbContext, CustomConfigurationDbContext>();
+            services.AddDbContext<CustomConfigurationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ConfigurationAndOperationData")));
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddScoped<ILocalUserService, LocalUserService>();

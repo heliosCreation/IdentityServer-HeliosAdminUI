@@ -117,14 +117,14 @@ namespace IdentityServer
 
             services.AddDbContext<PersistedGrantDbContext>(options =>
                options.UseSqlServer(connectionString));
-            services.AddDbContext<ConfigurationDbContext>(options =>
+            services.AddDbContext<CustomConfigurationDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
             using (var serviceProvider = services.BuildServiceProvider())
             {
                 using (var scope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
                 {
-                    var context = scope.ServiceProvider.GetService<ConfigurationDbContext>();
+                    var context = scope.ServiceProvider.GetService<CustomConfigurationDbContext>();
 
                     context.Database.Migrate();
                     if (!context.Clients.Any())

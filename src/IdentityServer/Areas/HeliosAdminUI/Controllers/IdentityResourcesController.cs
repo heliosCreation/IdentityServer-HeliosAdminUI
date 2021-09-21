@@ -36,11 +36,6 @@ namespace IdentityServer.Areas.HeliosAdminUI.Controllers
             var vm = new IdentityResourceListViewModel() { IdentityResourcesList = vmProp };
             return View(vm);
         }
-        // GET: IdentityResourcesController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
 
         // GET: IdentityResourcesController/Create
         public ActionResult Create(bool isSuccess = false)
@@ -50,7 +45,6 @@ namespace IdentityServer.Areas.HeliosAdminUI.Controllers
             return View(vm);
         }
 
-        // POST: IdentityResourcesController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateIdentityResourceViewModel model)
@@ -70,8 +64,6 @@ namespace IdentityServer.Areas.HeliosAdminUI.Controllers
             return View(model);
         }
 
-
-        // GET: IdentityResourcesController/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
             var entity = await _identityResourceRepository.GetByIdAsync(id);
@@ -83,7 +75,6 @@ namespace IdentityServer.Areas.HeliosAdminUI.Controllers
             return View(vm);
         }
 
-        // POST: IdentityResourcesController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, UpdateIdentityResourceViewModel model)
@@ -96,7 +87,7 @@ namespace IdentityServer.Areas.HeliosAdminUI.Controllers
             {
                 return RedirectToAction(nameof(GetAll), new { Error = true });
             }
-            model.UserClaims = IdentityResourceClaimsHelper.CreateClaims(model.UserClaimsString);
+            model.UserClaims = IdentityResourceClaimsHelper.CreateClaims(model.UserClaimsString, model.Id);
             var entity = _mapper.Map<IdentityResource>(model);
             var updated = await _identityResourceRepository.UpdateAsync(entity);
             if (!updated)
@@ -108,7 +99,6 @@ namespace IdentityServer.Areas.HeliosAdminUI.Controllers
             return RedirectToAction(nameof(GetAll), new { isSuccess = true });
         }
 
-        // GET: IdentityResourcesController/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

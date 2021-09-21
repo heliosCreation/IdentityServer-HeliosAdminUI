@@ -10,7 +10,7 @@ namespace IdentityServer.Areas.HeliosAdminUI.Helpers
         {
         }
 
-        public static List<IdentityResourceClaim> CreateClaims(string claims)
+        public static List<IdentityResourceClaim> CreateClaims(string claims, int? id)
         {
             var claimList = claims
                 .Replace(",", " ")
@@ -20,7 +20,7 @@ namespace IdentityServer.Areas.HeliosAdminUI.Helpers
             var resourcesClaims = new List<IdentityResourceClaim>();
             foreach (var claim in claimList)
             {
-                resourcesClaims.Add(new IdentityResourceClaim() { Type = claim });
+                resourcesClaims.Add(new IdentityResourceClaim() { Type = claim, IdentityResourceId = id.Value});
             }
 
             return resourcesClaims;

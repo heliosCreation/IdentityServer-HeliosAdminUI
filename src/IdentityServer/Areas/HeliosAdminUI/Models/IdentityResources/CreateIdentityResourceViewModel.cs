@@ -20,7 +20,7 @@ namespace IdentityServer.Areas.HeliosAdminUI.Models.IdentityResources
             {
                 return string.IsNullOrEmpty(UserClaimsString) ?
                         new List<IdentityResourceClaim>()
-                        : IdentityResourceClaimsHelper.CreateClaims(UserClaimsString); 
+                        : IdentityResourceClaimsHelper.CreateClaims(UserClaimsString, default(int)); 
             }
             set {}
         }
