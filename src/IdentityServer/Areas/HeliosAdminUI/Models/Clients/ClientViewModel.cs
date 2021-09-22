@@ -9,22 +9,13 @@ namespace IdentityServer.Areas.HeliosAdminUI.Models.Clients
 {
     public class ClientViewModel
     {
+        public int Id { get; set; }
         public string ClientId { get; set; }
         public string ClientName { get; set; }
-        public string ClientSecret { get; set; }
-
-        public GrantTypesEnum GrantTypesEnum { get; set; }
-        public string AllowedGrandTypesString { get; set; }
         public IEnumerable<string> AllowedGrantTypes { get; set; }
-
-        public string ClientSecrets { get; set; }
         public string RedirectUris { get; set; }
         public string FrontChannelLogoutUri { get; set; }
         public string PostLogoutRedirectUris { get; set; }
-
-        public string AllowedScopesString { get; set; }
         public IEnumerable<string> AllowedScopes { get; set; }
-
-
     }
 }

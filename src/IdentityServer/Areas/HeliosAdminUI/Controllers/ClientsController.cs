@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using IdentityServer.Areas.HeliosAdminUI.Models.Clients;
 using IdentityServer.Areas.HeliosAdminUI.Services.Contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -26,16 +27,29 @@ namespace IdentityServer.Areas.HeliosAdminUI.Controllers
             return View();
         }
 
-        // GET: ClientsController/Details/5
-        public ActionResult Details(int id)
+
+        public async Task<IActionResult> GetAll(bool isSuccess, bool error = false)
         {
-            return View();
+            ViewBag.Error = error;
+            ViewBag.isSuccess = isSuccess;
+
+            var clients = await _clientRepository.GetAllAsync();
+            var vm = _mapper.Map<List<ClientViewModel>>(clients);
+            return View(vm);
+        }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var entity = await _clientRepository.GetByIdAsync(id);
+            var vm = _mapper.Map<ClientViewModel>(entity);
+            return View(vm);
         }
 
         // GET: ClientsController/Create
         public ActionResult Create()
         {
-            return View();
+            var vm = new CreateClientViewModel();
+            return View(vm);
         }
 
         // POST: ClientsController/Create

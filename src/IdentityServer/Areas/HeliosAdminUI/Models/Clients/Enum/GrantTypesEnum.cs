@@ -1,4 +1,4 @@
-﻿namespace IdentityServer.Areas.HeliosAdminUI.Models.Clients
+﻿namespace IdentityServer.Areas.HeliosAdminUI.Models.Clients.Enum
 {
     public enum GrantTypesEnum
     {

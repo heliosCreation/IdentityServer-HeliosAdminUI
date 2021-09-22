@@ -1,0 +1,78 @@
+﻿@model ClientViewModel
+@section style{
+
+    <link href="~/css/TagsInput.css" rel="stylesheet" />
+}
+<a asp-action="Index" class="btn btn-primary mb-3"> <i class="bi bi-arrow-left-circle-fill"></i> Go back </a>
+
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">Client Details</h4>
+        <hr />
+        <div class="row">
+            <div class="form-group col-6">
+                <label asp-for="ClientId" class="col-form-label"></label>
+                <div>
+                    <input asp-for="ClientId" class="form-control" readonly="@(true)" />
+                </div>
+            </div>
+
+            <div class="form-group col-6">
+                <label asp-for="ClientName" class="col-form-label"></label>
+                <div>
+                    <input asp-for="ClientName" class="form-control" readonly="@(true)" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-4">
+                <label asp-for="RedirectUris" class="col-form-label"></label>
+                <div>
+                    <input asp-for="RedirectUris" class="form-control" readonly="@(true)" />
+                </div>
+            </div>
+
+            <div class="form-group col-4">
+                <label asp-for="FrontChannelLogoutUri" class="col-form-label"></label>
+                <div>
+                    <input asp-for="FrontChannelLogoutUri" class="form-control" readonly="@(true)" />
+                </div>
+            </div>
+
+            <div class="form-group col-4">
+                <label asp-for="PostLogoutRedirectUris" class="col-form-label"></label>
+                <div>
+                    <input asp-for="PostLogoutRedirectUris" class="form-control" readonly="@(true)" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-6">
+                <label asp-for="AllowedGrantTypes" class="col-form-label"></label>
+                <div class="keysHolder">
+                    @foreach (var grantType in Model.AllowedGrantTypes)
+                    {
+                        <span>@grantType</span>
+                    }
+                </div>
+            </div>
+            <hr />
+        </div>
+
+        <div class="row">
+            <div class="form-group col-6">
+                <label asp-for="AllowedScopes" class="col-form-label"></label>
+                <div class="keysHolder">
+                    @foreach (var scope in Model.AllowedScopes)
+                    {
+                        <span>@scope</span>
+                    }
+                </div>
+            </div>
+            <hr />
+        </div>
+    </div>
+</div>
+

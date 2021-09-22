@@ -1,0 +1,75 @@
+﻿@model List<ClientViewModel>
+
+@{
+    if (ViewBag.Error == true)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            An error occured while processing your request. Contact your administrator. <br />
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+    if (ViewBag.isSuccess == true)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            Your operation was a <strong>success</strong>. <br />
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+}
+<div class="row p-3 m-3">
+    <a class="btn btn-primary" asp-controller="Clients" asp-action="Index"> <i class="bi bi-arrow-left-circle-fill"></i> Go back</a>
+
+    <a class="btn btn-success ml-auto" asp-controller="Clients" asp-action="Create">Add a Client <i class="bi bi-lightning"></i></a>
+
+</div>
+<div class="row border p-3 m-3">
+
+    <table class="table table-bordered table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">ClientId</th>
+                <th scope="col">ClientName</th>
+                <th scope="col">AllowedGrantTypes</th>
+                <th scope="col">AllowedScopes</th>
+                <th scope="col">Actions</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var client in Model)
+            {
+            <tr>
+                <td>@client.ClientId</td>
+                <td>@client.ClientName</td>
+                <td>
+                    @foreach (var grantType in client.AllowedGrantTypes)
+                    {
+                        <p>@grantType</p>
+                    }
+                </td>
+                <td>
+                    @foreach (var scope in client.AllowedScopes)
+                    {
+                        <p>@scope</p>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@client.Id" class="btn btn-primary text-white">
+                        <i class="bi bi-receipt"></i>
+                    </a>
+                    <a asp-action="Edit" asp-route-id="@client.Id" class="btn btn-success text-white">
+                        <i class="bi bi-pen"></i>
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@client.Id" class="btn btn-danger text-white">
+                        <i class="bi bi-trash"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

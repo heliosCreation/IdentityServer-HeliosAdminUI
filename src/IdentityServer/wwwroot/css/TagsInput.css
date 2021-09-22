@@ -37,14 +37,13 @@
     font-family: monospace;
     border-bottom: 2px solid #673AB7;
 }
-
 .addedKeysHolder {
     float: left;
     width: 100%;
     height: auto;
     margin: 8px 0 0 0;
 }
-
+.keysHolder > span,
 .addedKeysHolder > span {
     background: #007bff;
     padding: 8px 10px 8px 30px;
@@ -56,6 +55,9 @@
     font-size: 12pt;
     position: relative;
     cursor: pointer;
+}
+.keysHolder > span {
+    padding: 8px 10px 8px 10px;
 }
 
 .addedKeysHolder > span:after {
