@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using IdentityServer.Areas.HeliosAdminUI.Services.Contracts;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,6 +12,14 @@ namespace IdentityServer.Areas.HeliosAdminUI.Controllers
     [Area("HeliosAdminUI")]
     public class ClientsController : Controller
     {
+        private readonly IClientRepository _clientRepository;
+        private readonly IMapper _mapper;
+
+        public ClientsController(IClientRepository clientRepository, IMapper mapper)
+        {
+            _clientRepository = clientRepository ?? throw new ArgumentNullException(nameof(clientRepository));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+        }
         // GET: ClientsController
         public ActionResult Index()
         {
