@@ -1,5 +1,5 @@
 ﻿@model CreateClientViewModel
-@using IdentityServer.Areas.HeliosAdminUI.Models.Clients.Enum
+@using IdentityServer.Areas.HeliosAdminUI.Models.Clients.Assets
 @section style{
 
     <link href="~/css/TagsInput.css" rel="stylesheet" />
@@ -19,47 +19,149 @@
 
 
 <div id="accordion">
-    <div class="card">
-        <div class="card-header" id="headingOne">
-            <h5 class="mb-0">
-                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    Collapsible Group Item #1
-                </button>
-            </h5>
-        </div>
+    <form method="post" asp-controller="Clients" asp-action="Create">
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <h3 class="mb-0">
+                    <button class="btn w-100" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        <strong class="h5"> Basics <i class="bi bi-caret-down-fill"></i> </strong>
+                    </button>
+                </h3>
+            </div>
 
-        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-            <div class="card-body">
-                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="form-group col-6">
+                            <label asp-for="ClientId" class="col-form-label"></label>
+                            <div>
+                                <input asp-for="ClientId" class="form-control" />
+                            </div>
+                            <span class="text-danger" asp-validation-for="ClientId"></span>
+                        </div>
+
+                        <div class="form-group col-6">
+                            <label asp-for="ClientName" class="col-form-label"></label>
+                            <div>
+                                <input asp-for="ClientName" class="form-control" />
+                            </div>
+                            <span class="text-danger" asp-validation-for="ClientName"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-12">
+                            <label asp-for="ClientSecret" class="col-form-label"></label>
+                            <div class="d-flex align-items-center">
+                                <input asp-for="ClientSecret" class="form-control w-50 mr-2" />
+                                <span class="text-success d-inline">Make sure to <strong>keep a record</strong> of your secret somewhere.</span>
+                            </div>
+                            <span class="text-danger" asp-validation-for="ClientSecret"></span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="card">
-        <div class="card-header" id="headingTwo">
-            <h5 class="mb-0">
-                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                    Collapsible Group Item #2
-                </button>
-            </h5>
-        </div>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-            <div class="card-body">
-                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+        <div class="card">
+            <div class="card-header" id="headingTwo">
+                <h5 class="mb-0">
+                    <button class="btn collapsed w-100" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        <strong class="h5">Uris <i class="bi bi-caret-down-fill"></i></strong>
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="form-group col-4">
+                            <label asp-for="RedirectUris" class="col-form-label"></label>
+                            <div class="input-group">
+                                <input asp-for="RedirectUris" class="form-control" />
+                                <div class="input-group-append">
+                                    <span class="input-group-text">/signin-oidc</span>
+                                </div>
+                            </div>
+                            <span class="text-danger" asp-validation-for="RedirectUris"></span>
+                        </div>
+
+                        <div class="form-group col-4">
+                            <label asp-for="FrontChannelLogoutUri" class="col-form-label"></label>
+                            <div class="input-group">
+                                <input asp-for="FrontChannelLogoutUri" class="form-control" />
+                                <div class="input-group-append">
+                                    <span class="input-group-text">/signout-oidc</span>
+                                </div>
+                            </div>
+                            <span class="text-danger" asp-validation-for="FrontChannelLogoutUri"></span>
+                        </div>
+                        <div class="form-group col-4">
+                            <label asp-for="PostLogoutRedirectUris" class="col-form-label"></label>
+                            <div class="input-group">
+                                <input asp-for="PostLogoutRedirectUris" class="form-control" />
+                                <div class="input-group-append">
+                                    <span class="input-group-text">/signout-callback-oidc</span>
+                                </div>
+                            </div>
+                            <span class="text-danger" asp-validation-for="PostLogoutRedirectUris"></span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="card">
-        <div class="card-header" id="headingThree">
-            <h5 class="mb-0">
-                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                    Collapsible Group Item #3
-                </button>
-            </h5>
-        </div>
-        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-            <div class="card-body">
-                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+        <div class="card">
+            <div class="card-header" id="headingThree">
+                <h5 class="mb-0">
+                    <button class="btn w-100 collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        <strong class="h5">Grants & Scopes <i class="bi bi-caret-down-fill"></i></strong>
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree">
+                <div class="card-body">
+                    <div class="row">
+                        <div class=" form-group col-6">
+                            <label asp-for="AllowedGrantTypes" class="col-form-label"></label>
+                            <div>
+                                <select asp-for="GrantTypesKey" asp-items="Model.GrantTypesList"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class=" form-group col-6">
+                            <label asp-for="AllowedScopes" class="col-form-label h5"></label>
+                            <p><u>Add default scopes by clicking on it:</u></p>
+                            @foreach (var scope in Model.StandardScopes)
+                            {
+                                <button type="button" class="btn btn-outline-primary scope-toggler" value="@scope">@scope</button>
+                            }
+                            <br />
+                            <p><u>Create new custom scopes:</u></p>
+                            <div class="keyHandler d-flex">
+                                <button class="btn centered" type="button" id="addKey"> <i class="bi bi-plus"></i> </button>
+                                <input type="text" placeholder="Keyword + Enter" id="keysInput">
+                            </div>
+                            <div class="addedKeysHolder"></div>
+
+
+                            <!-- Just give this input the name="etc" attribute -->
+                            <input id="tag-holder" asp-for="AllowedScopesString" type="hidden">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+
+                        <div class="col-2">
+                            <button class="btn btn-success btn-block">Create <i class="bi bi-check-square ml-1"></i></button>
+                        </div>
+
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </form>
 </div>
+
+@section Scripts
+{
+    <script src="@Url.Content("~/js/site.js")"></script>
+}

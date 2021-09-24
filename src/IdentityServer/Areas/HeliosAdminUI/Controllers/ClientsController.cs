@@ -1,12 +1,14 @@
 ﻿using AutoMapper;
 using IdentityServer.Areas.HeliosAdminUI.Models.Clients;
 using IdentityServer.Areas.HeliosAdminUI.Services.Contracts;
+using IdentityServer4.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using Entities = IdentityServer4.EntityFramework.Entities;
+using Is4Mapper = IdentityServer4.EntityFramework.Mappers; 
 
 namespace IdentityServer.Areas.HeliosAdminUI.Controllers
 {
@@ -55,16 +57,23 @@ namespace IdentityServer.Areas.HeliosAdminUI.Controllers
         // POST: ClientsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create(CreateClientViewModel model)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                return View(model);
             }
-            catch
+            var modelEntity = _mapper.Map<Client>(model);
+            var entity = Is4Mapper.ClientMappers.ToEntity(modelEntity);
+            var created = await _clientRepository.AddAsync(entity);
+
+            if (created)
             {
-                return View();
+                return RedirectToAction(nameof(Create), new { isSuccess = true });
             }
+
+            ModelState.AddModelError(string.Empty, "An error occured while adding your api scope. Please contact your administrator.");
+            return View(model);
         }
 
         // GET: ClientsController/Edit/5

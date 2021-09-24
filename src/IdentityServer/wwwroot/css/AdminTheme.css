@@ -1,0 +1,15 @@
+﻿.api-scopes-theme {
+    background-color: rgb(112 4 255 / 11%) !important
+}
+
+.identity-resource-theme {
+    background-color: rgb(3 153 241 / 11%) !important;
+}
+
+.client-theme {
+    background-color: rgb(7 255 60 / 11%) !important;
+}
+
+.user-theme {
+    background-color: rgb(255 133 7 / 11%) !important;
+}

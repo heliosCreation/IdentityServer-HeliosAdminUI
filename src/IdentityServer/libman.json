@@ -24,6 +24,10 @@
         "bootstrap-tagsinput.js",
         "bootstrap-tagsinput.min.js.map"
       ]
+    },
+    {
+      "library": "jquery@3.4.1",
+      "destination": "wwwroot/lib/jquery/"
     }
   ]
 }

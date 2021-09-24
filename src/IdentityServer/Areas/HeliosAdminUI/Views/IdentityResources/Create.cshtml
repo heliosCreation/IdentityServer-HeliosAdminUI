@@ -49,8 +49,7 @@
                     <div class="addedKeysHolder"></div>
 
 
-                    <!-- Just give this input the name="etc" attribute -->
-                    <input asp-for="UserClaimsString" type="hidden">
+                    <input id="tag-holder" asp-for="UserClaimsString" type="hidden">
                     <span class="text-danger" asp-validation-for="UserClaims"></span>
 
                 </div>
@@ -70,51 +69,5 @@
 
 @section Scripts
 {
-    <script>
-
-        //call addKey() by pressing Enter (  This block is optional!  )
-        $(window).keydown(function (event) {
-            if (event.keyCode == 13) {
-                event.preventDefault();
-                addKey();
-                return false;
-            }
-        });
-
-        //call addKey() by pressing button
-        $('#addKey').click(function (e) {
-            addKey();
-        });
-
-
-        //Add key function
-        function addKey() {
-            let key = $('#keysInput').val()
-            if (key != '') {
-                let tag = document.createElement('span')
-                $(tag).append(key)
-                $(tag).attr('onclick', `$(this).remove();removeKey("${key}");`)
-                $('.addedKeysHolder').append(tag)
-                $('#keysInput').val('')
-                resetKey()
-            }
-        }
-
-        //According to my goals, this function was equal to the resetKey(). But here I put it in a separate block, so you can easily customize it if you want
-        function removeKey() {
-            resetKey()
-        }
-
-        //Reset all keys
-        function resetKey() {
-            $('#UserClaimsString').val('')
-            for (let i = 1; i <= $('.addedKeysHolder span').length; i++) {
-                let theKey = $(`.addedKeysHolder span:nth-child(${i})`).text()
-                let prevVal = $('#UserClaimsString').val() + ','
-                $('#UserClaimsString').val(prevVal + theKey)
-            }
-            $('#UserClaimsString').val($('#UserClaimsString').val());
-            $('#keysInput').focus();
-        }
-    </script>
+    <script src="@Url.Content("~/js/site.js")"></script>
 }
