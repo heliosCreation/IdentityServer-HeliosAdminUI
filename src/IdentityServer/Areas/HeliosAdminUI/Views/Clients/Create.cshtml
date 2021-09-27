@@ -33,10 +33,13 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="form-group col-6">
-                            <label asp-for="ClientBasics.ClientId" class="col-form-label"> </label>
-                            <div class="tooltip">
-                                <i class="bi bi-info-circle ml-2 text-info cursor-pointer"></i>
-                                <span class="tooltiptext">Tooltip text</span>
+                            <div>
+                                @*<label asp-for="ClientBasics.ClientId" class="col-form-label"> </label>
+                                <div class="tooltip">
+                                    <i class="bi bi-info-circle ml-2 text-info cursor-pointer"></i>
+                                    <span class="tooltiptext">Tooltip text</span>
+                                </div>*@
+                                <FieldInfo asp-for="ClientBasics.ClientId" field-information="sometext"></FieldInfo>
                             </div>
                             <div>
                                 <input asp-for="ClientBasics.ClientId" class="form-control" />
