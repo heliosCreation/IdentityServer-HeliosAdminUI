@@ -1,9 +1,9 @@
 ﻿using IdentityServer4.Models;
 using System.Collections.Generic;
 
-namespace IdentityServer.Areas.HeliosAdminUI.Models.Clients.Assets
+namespace IdentityServer.Areas.HeliosAdminUI.Dictionnary.Clients
 {
-    public static class GrantTypesDictionnary
+    public static class GrantTypesDictionary
     {
         public static Dictionary<string, ICollection<string>> Data = new Dictionary<string, ICollection<string>>
         {

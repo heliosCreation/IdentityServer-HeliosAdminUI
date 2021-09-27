@@ -1,11 +1,10 @@
-﻿using IdentityServer.Areas.HeliosAdminUI.Models.Clients.Assets;
+﻿using IdentityServer.Areas.HeliosAdminUI.Dictionnary.Clients;
 using IdentityServer4;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace IdentityServer.Areas.HeliosAdminUI.Models.Clients.Submodel
 {
@@ -49,7 +48,7 @@ namespace IdentityServer.Areas.HeliosAdminUI.Models.Clients.Submodel
             {
                 return string.IsNullOrEmpty(GrantTypesKey) ?
                     new List<string>() :
-                    GrantTypesDictionnary.Data[GrantTypesKey];
+                    GrantTypesDictionary.Data[GrantTypesKey];
             }
             set { }
         }

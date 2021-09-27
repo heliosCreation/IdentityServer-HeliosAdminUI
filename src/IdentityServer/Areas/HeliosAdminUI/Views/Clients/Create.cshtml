@@ -1,5 +1,6 @@
 ﻿@model CreateClientViewModel
-@using IdentityServer.Areas.HeliosAdminUI.Models.Clients.Assets
+@using IdentityServer.Areas.HeliosAdminUI.Dictionnary.Clients
+@using Info = IdentityServer.Areas.HeliosAdminUI.Dictionnary.Clients.ClientsInfo
 @section style{
 
     <link href="~/css/TagsInput.css" rel="stylesheet" />
@@ -33,14 +34,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="form-group col-6">
-                            <div>
-                                @*<label asp-for="ClientBasics.ClientId" class="col-form-label"> </label>
-                                <div class="tooltip">
-                                    <i class="bi bi-info-circle ml-2 text-info cursor-pointer"></i>
-                                    <span class="tooltiptext">Tooltip text</span>
-                                </div>*@
-                                <FieldInfo asp-for="ClientBasics.ClientId" field-information="sometext"></FieldInfo>
-                            </div>
+                            <FieldInfo asp-for="ClientBasics.ClientId" information-category="1"></FieldInfo>
                             <div>
                                 <input asp-for="ClientBasics.ClientId" class="form-control" />
                             </div>
