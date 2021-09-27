@@ -29,13 +29,14 @@ namespace IdentityServer.Areas.HeliosAdminUI.Profiles
                 .ForMember(c => c.AllowedScopes, opt => opt.MapFrom(src => src.AllowedScopes.Select(a => a.Scope)))
                 .ForMember(c => c.RedirectUris, opt => opt.MapFrom(src => src.RedirectUris[0].RedirectUri))
                 .ForMember(c => c.PostLogoutRedirectUris, opt => opt.MapFrom(src => src.PostLogoutRedirectUris[0].PostLogoutRedirectUri));
+            
             CreateMap<CreateClientViewModel, ModelEntities.Client>()
                 .ForMember(c => c.ClientSecrets, opt => opt.MapFrom(src => new List<ModelEntities.Secret> 
                 {
-                    new ModelEntities.Secret(src.ClientSecret.Sha256(), null)
+                    new ModelEntities.Secret(src.ClientBasics.ClientSecret.Sha256(), null)
                 }))
-                .ForMember(c => c.RedirectUris, opt => opt.MapFrom(src => new List<string> { src.RedirectUris }))
-                .ForMember(c => c.PostLogoutRedirectUris, opt => opt.MapFrom(src => new List<string> { src.PostLogoutRedirectUris }));
+                .ForMember(c => c.RedirectUris, opt => opt.MapFrom(src => new List<string> { src.ClientBasics.RedirectUris }))
+                .ForMember(c => c.PostLogoutRedirectUris, opt => opt.MapFrom(src => new List<string> { src.ClientAuthentificationLogout.PostLogoutRedirectUris }));
             CreateMap<ModelEntities.Client, Entities.Client>();
         }
 
