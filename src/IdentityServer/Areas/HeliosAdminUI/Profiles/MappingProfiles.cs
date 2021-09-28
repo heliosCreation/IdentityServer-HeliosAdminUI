@@ -14,31 +14,45 @@ namespace IdentityServer.Areas.HeliosAdminUI.Profiles
     {
         public MappingProfiles()
         {
+            #region ApiScopes
             CreateMap<Entities.ApiScope, ApiScopeViewModel>();
             CreateMap<CreateApiScopeModel, Entities.ApiScope>();
             CreateMap<UpdateApiScopeViewModel, Entities.ApiScope>().ReverseMap();
+            #endregion
 
-
+            #region IdentityResources
             CreateMap<Entities.IdentityResource, IdentityResourceViewModel>()
                 .ForMember(m => m.UserClaims, opt => opt.MapFrom(src => src.UserClaims.Select(u => u.Type)));
             CreateMap<Entities.IdentityResource, UpdateIdentityResourceViewModel>().ReverseMap();
             CreateMap<CreateIdentityResourceViewModel, Entities.IdentityResource>();
+            #endregion
 
+            #region Client
             CreateMap<Entities.Client, ClientViewModel>()
                 .ForMember(c => c.AllowedGrantTypes, opt => opt.MapFrom(src => src.AllowedGrantTypes.Select(a => a.GrantType)))
                 .ForMember(c => c.AllowedScopes, opt => opt.MapFrom(src => src.AllowedScopes.Select(a => a.Scope)))
                 .ForMember(c => c.RedirectUris, opt => opt.MapFrom(src => src.RedirectUris[0].RedirectUri))
                 .ForMember(c => c.PostLogoutRedirectUris, opt => opt.MapFrom(src => src.PostLogoutRedirectUris[0].PostLogoutRedirectUri));
-            
-            CreateMap<CreateClientViewModel, ModelEntities.Client>()
-                .ForMember(c => c.ClientSecrets, opt => opt.MapFrom(src => new List<ModelEntities.Secret> 
-                {
-                    new ModelEntities.Secret(src.ClientBasics.ClientSecrets.Sha256(), null)
-                }))
-                .ForMember(c => c.RedirectUris, opt => opt.MapFrom(src => new List<string> { src.ClientBasics.RedirectUris }))
-                .ForMember(c => c.PostLogoutRedirectUris, opt => opt.MapFrom(src => new List<string> { src.ClientAuthentificationLogout.PostLogoutRedirectUris }));
-            CreateMap<ModelEntities.Client, Entities.Client>();
-        }
 
+            CreateMap<CreateClientViewModel, ModelEntities.Client>()
+                .ForMember(c => c.ClientSecrets, opt => opt.MapFrom(src => new List<ModelEntities.Secret>
+                {
+                    new ModelEntities.Secret(src.ClientSecrets.Sha256(), null)
+                }))
+                .ForMember(c => c.RedirectUris, opt => opt.MapFrom(src => new List<string> { src.RedirectUris }))
+                .ForMember(c => c.PostLogoutRedirectUris, opt => opt.MapFrom(src => new List<string> { src.PostLogoutRedirectUris }));
+
+            CreateMap<Entities.Client, UpdateClientViewModel>()
+            .ForMember(c => c.PostLogoutRedirectUris, opt => opt.MapFrom(src => src.PostLogoutRedirectUris[0].PostLogoutRedirectUri))
+            .ForMember(c => c.RedirectUris, opt => opt.MapFrom(src => src.RedirectUris[0].RedirectUri))
+            .ForMember(c => c.AllowedScopesString, opt => opt.MapFrom(src => string.Join(",", src.AllowedScopes.Select(s => s.Scope))) );
+
+            CreateMap<UpdateClientViewModel, ModelEntities.Client>()
+                .ForMember(c => c.RedirectUris, opt => opt.MapFrom(src => new List<string> { src.RedirectUris }))
+                .ForMember(c => c.PostLogoutRedirectUris, opt => opt.MapFrom(src => new List<string> { src.PostLogoutRedirectUris }));
+
+            #endregion
+
+        }
     }
 }

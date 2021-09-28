@@ -1,6 +1,7 @@
 ﻿using IdentityServer.Areas.HeliosAdminUI.Services.Contracts;
 using IdentityServer.Data;
 using IdentityServer4.EntityFramework.DbContexts;
+using IdentityServer4.EntityFramework.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -37,13 +38,27 @@ namespace IdentityServer.Areas.HeliosAdminUI.Services.Base
         public virtual async Task<bool> UpdateAsync(T entity)
         {
             _dbContext.Entry(entity).State = EntityState.Modified;
-            return await _dbContext.SaveChangesAsync() > 0;
+            try
+            {
+                return await _dbContext.SaveChangesAsync() > 0;
+
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                Console.WriteLine(ex);
+                throw;
+            }
         }
 
         public async Task<bool> DeleteAsync(T entity)
         {
             _dbContext.Set<T>().Remove(entity);
             return await _dbContext.SaveChangesAsync() > 0 ;
+        }
+
+        public virtual Task<bool> UpdateAsync(int id, T newEntity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

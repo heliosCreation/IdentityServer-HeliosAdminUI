@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Entities = IdentityServer4.EntityFramework.Entities;
-using Is4Mapper = IdentityServer4.EntityFramework.Mappers; 
+using Is4Mapper = IdentityServer4.EntityFramework.Mappers;
 
 namespace IdentityServer.Areas.HeliosAdminUI.Controllers
 {
@@ -72,50 +72,71 @@ namespace IdentityServer.Areas.HeliosAdminUI.Controllers
                 return RedirectToAction(nameof(Create), new { isSuccess = true });
             }
 
-            ModelState.AddModelError(string.Empty, "An error occured while adding your api scope. Please contact your administrator.");
+            ModelState.AddModelError(string.Empty, "An error occured while adding your Client. Please contact your administrator.");
             return View(model);
         }
 
         // GET: ClientsController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            return View();
+            var entity = await _clientRepository.GetByIdAsync(id);
+            if (entity == null)
+            {
+                return NotFound();
+            }
+            var vm = _mapper.Map<UpdateClientViewModel>(entity);
+            return View(vm);
         }
 
-        // POST: ClientsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(UpdateClientViewModel model)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                return View(model);
             }
-            catch
+
+            var modelEntity = _mapper.Map<Client>(model);
+            var entity = Is4Mapper.ClientMappers.ToEntity(modelEntity);
+            var updated = await _clientRepository.UpdateAsync(model.Id, entity);
+
+            if (updated)
             {
-                return View();
+                return RedirectToAction(nameof(GetAll), new { isSuccess = true });
             }
+
+            ModelState.AddModelError(string.Empty, "An error occured while adding your Client. Please contact your administrator.");
+            return View(model);
         }
 
-        // GET: ClientsController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return BadRequest();
+            }
+
+            var entity = await _clientRepository.GetByIdAsync(id.Value);
+            if (entity == null)
+            {
+                return NotFound();
+            }
+            var vm = _mapper.Map<ClientViewModel>(entity);
+            return View(vm);
         }
 
-        // POST: ClientsController/Delete/5
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            try
+            var entity = await _clientRepository.GetByIdAsync(id);
+            var deleted = await _clientRepository.DeleteAsync(entity);
+            if (!deleted)
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(GetAll), new { Error = true });
             }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction(nameof(GetAll), new { isSuccess = true });
         }
     }
 }

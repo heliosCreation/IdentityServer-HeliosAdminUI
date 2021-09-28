@@ -32,7 +32,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\HeliosAdminUI\Data\" />
     <Folder Include="Data\Migrations\ConfigurationDb\" />
   </ItemGroup>
 </Project>

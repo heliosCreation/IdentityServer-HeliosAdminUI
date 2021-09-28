@@ -37,20 +37,17 @@ namespace IdentityServer.Areas.HeliosAdminUI.Controllers
             return View(vm);
         }
 
-        // GET: ApiScopesController/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: ApiScopesController/Create
         public ActionResult Create(bool isSuccess = false)
         {
             ViewBag.isSuccess = isSuccess;
             return View(new CreateApiScopeModel());
         }
 
-        // POST: ApiScopesController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateApiScopeModel model)
@@ -72,7 +69,6 @@ namespace IdentityServer.Areas.HeliosAdminUI.Controllers
 
         }
 
-        // GET: ApiScopesController/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
             var entity = await _apiScopeRepository.GetByIdAsync(id);
@@ -84,7 +80,6 @@ namespace IdentityServer.Areas.HeliosAdminUI.Controllers
             return View(vm);
         }
 
-        // POST: ApiScopesController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, UpdateApiScopeViewModel model)
@@ -109,13 +104,12 @@ namespace IdentityServer.Areas.HeliosAdminUI.Controllers
         }
 
 
-        // GET: ApiScopesController/Delete/5
         [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
-                return NotFound();
+                return BadRequest();
             }
 
             var entity = await _apiScopeRepository.GetByIdAsync(id.Value);
@@ -127,7 +121,6 @@ namespace IdentityServer.Areas.HeliosAdminUI.Controllers
             return View(vm);
         }
 
-        // POST: ApiScopesController/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

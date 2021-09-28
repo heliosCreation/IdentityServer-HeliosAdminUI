@@ -9,8 +9,9 @@ using System.Linq;
 
 namespace IdentityServer.Areas.HeliosAdminUI.Models.Clients
 {
-    public class CreateClientViewModel
+    public class UpdateClientViewModel
     {
+        public int Id { get; set; }
         #region Basics
         [Required]
         [Display(Name = "Client Id")]
@@ -21,11 +22,6 @@ namespace IdentityServer.Areas.HeliosAdminUI.Models.Clients
         [Display(Name = "Client Name")]
         [StringLength(250)]
         public string ClientName { get; set; }
-
-        [Required]
-        [Display(Name = "Client Secret")]
-        [StringLength(250)]
-        public string ClientSecrets { get; set; }
 
         public bool Enable { get; set; } = true;
         public bool RequireClientSecret { get; set; } = true;
@@ -71,6 +67,8 @@ namespace IdentityServer.Areas.HeliosAdminUI.Models.Clients
                         new {Id = "ResourceOwnerPasswordAndClientCredentials", Value = "Resource owner password and client credentials"},
                         new {Id = "DeviceFlow", Value = "Device flow"}
             }, "Id", "Value");
+
+        [Required(ErrorMessage =" A value for the grant type must be provided.")]
         public string GrantTypesKey { get; set; }
 
         public IEnumerable<string> StandardScopes = new List<string>()

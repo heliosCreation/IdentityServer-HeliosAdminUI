@@ -36,6 +36,7 @@ function resetKey() {
     for (let i = 1; i <= $('.addedKeysHolder span').length; i++)
     {
         let theKey = $(`.addedKeysHolder span:nth-child(${i})`).text()
+        console.log(theKey)
         let prevVal = $('#tag-holder').val() + ','
         $('#tag-holder').val(prevVal + theKey)
     }
@@ -49,6 +50,7 @@ function resetKey() {
     });
     $('#keysInput').focus();
 }
+
 
 $(".scope-toggler").click(function () {
     manageScopeTogglerkeys($(this));
@@ -71,3 +73,21 @@ function manageScopeTogglerkeys(obj) {
     }
 
 }
+
+function ShowPanel() {
+    var validator = $("form").validate();
+    if (validator.numberOfInvalids() > 0) {
+        validator.showErrors();
+        var index = $(".input-validation-error")
+            .closest(".collapse")
+            .index(".collapse");
+
+        $(".card").eq(index).children(".collapse").show()
+    }
+}
+
+$("#save").click(function () { if (!$("form").valid()) { ShowPanel(); } });
+
+$.validator.setDefaults({
+    ignore: ""
+});
