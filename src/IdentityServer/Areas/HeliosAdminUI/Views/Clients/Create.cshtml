@@ -34,7 +34,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="form-group col-6">
-                            <FieldInfo asp-for="ClientBasics.ClientId" information-category="1"></FieldInfo>
+                            <LabelInfo asp-for="ClientBasics.ClientId"></LabelInfo>
                             <div>
                                 <input asp-for="ClientBasics.ClientId" class="form-control" />
                             </div>
@@ -42,7 +42,7 @@
                         </div>
 
                         <div class="form-group col-6">
-                            <label asp-for="ClientBasics.ClientName" class="col-form-label"></label>
+                            <LabelInfo asp-for="ClientBasics.ClientName" information-category="1"></LabelInfo>
                             <div>
                                 <input asp-for="ClientBasics.ClientName" class="form-control" />
                             </div>
@@ -51,12 +51,12 @@
                     </div>
                     <div class="row">
                         <div class="form-group col-12">
-                            <label asp-for="ClientBasics.ClientSecret" class="col-form-label"></label>
+                            <LabelInfo asp-for="ClientBasics.ClientSecrets" information-category="1"></LabelInfo>
                             <div class="d-flex align-items-center">
-                                <input asp-for="ClientBasics.ClientSecret" class="form-control w-50 mr-2" />
+                                <input asp-for="ClientBasics.ClientSecrets" class="form-control w-50 mr-2" />
                                 <span class="text-success d-inline">Make sure to <strong>keep a record</strong> of your secret somewhere.</span>
                             </div>
-                            <span class="text-danger" asp-validation-for="ClientBasics.ClientSecret"></span>
+                            <span class="text-danger" asp-validation-for="ClientBasics.ClientSecrets"></span>
                         </div>
                     </div>
                 </div>
@@ -74,7 +74,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="form-group col-4">
-                            <label asp-for="ClientBasics.RedirectUris" class="col-form-label"></label>
+                            <LabelInfo asp-for="ClientBasics.RedirectUris" information-category="1"></LabelInfo>
                             <div class="input-group">
                                 <input asp-for="ClientBasics.RedirectUris" class="form-control" />
                                 <div class="input-group-append">
@@ -85,7 +85,7 @@
                         </div>
 
                         <div class="form-group col-4">
-                            <label asp-for="ClientAuthentificationLogout.FrontChannelLogoutUri" class="col-form-label"></label>
+                            <LabelInfo asp-for="ClientAuthentificationLogout.FrontChannelLogoutUri" information-category="1"></LabelInfo>
                             <div class="input-group">
                                 <input asp-for="ClientAuthentificationLogout.FrontChannelLogoutUri" class="form-control" />
                                 <div class="input-group-append">
@@ -95,7 +95,7 @@
                             <span class="text-danger" asp-validation-for="ClientAuthentificationLogout.FrontChannelLogoutUri"></span>
                         </div>
                         <div class="form-group col-4">
-                            <label asp-for="ClientAuthentificationLogout.PostLogoutRedirectUris" class="col-form-label"></label>
+                            <LabelInfo asp-for="ClientAuthentificationLogout.PostLogoutRedirectUris" information-category="1"></LabelInfo>
                             <div class="input-group">
                                 <input asp-for="ClientAuthentificationLogout.PostLogoutRedirectUris" class="form-control" />
                                 <div class="input-group-append">
@@ -120,7 +120,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class=" form-group col-6">
-                            <label asp-for="ClientBasics.AllowedGrantTypes" class="col-form-label"></label>
+                            <LabelInfo asp-for="ClientBasics.AllowedGrantTypes" information-category="1"></LabelInfo>
                             <div>
                                 <select asp-for="ClientBasics.GrantTypesKey" asp-items="Model.ClientBasics.GrantTypesList"></select>
                             </div>
@@ -129,7 +129,7 @@
                     <hr />
                     <div class="row">
                         <div class=" form-group col-6">
-                            <label asp-for="ClientBasics.AllowedScopes" class="col-form-label h5"></label>
+                            <LabelInfo asp-for="ClientBasics.AllowedScopes" information-category="1"></LabelInfo>
                             <p><u>Add default scopes by clicking on it:</u></p>
                             @foreach (var scope in Model.ClientBasics.StandardScopes)
                             {

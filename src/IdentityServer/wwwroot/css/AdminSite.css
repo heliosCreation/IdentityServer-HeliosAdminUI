@@ -31,7 +31,7 @@
     .tooltip .tooltiptext {
         visibility: hidden;
         width: 200px;
-        background-color: rgb(99 109 225 / 67%);
+        background-color: black;
         color: white;
         text-align: center;
         padding: 5px 0;

@@ -33,7 +33,7 @@ namespace IdentityServer.Areas.HeliosAdminUI.Profiles
             CreateMap<CreateClientViewModel, ModelEntities.Client>()
                 .ForMember(c => c.ClientSecrets, opt => opt.MapFrom(src => new List<ModelEntities.Secret> 
                 {
-                    new ModelEntities.Secret(src.ClientBasics.ClientSecret.Sha256(), null)
+                    new ModelEntities.Secret(src.ClientBasics.ClientSecrets.Sha256(), null)
                 }))
                 .ForMember(c => c.RedirectUris, opt => opt.MapFrom(src => new List<string> { src.ClientBasics.RedirectUris }))
                 .ForMember(c => c.PostLogoutRedirectUris, opt => opt.MapFrom(src => new List<string> { src.ClientAuthentificationLogout.PostLogoutRedirectUris }));

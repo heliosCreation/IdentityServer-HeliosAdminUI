@@ -23,7 +23,7 @@ namespace IdentityServer.Areas.HeliosAdminUI.Models.Clients.Submodel
         [Required]
         [Display(Name = "Client Secret")]
         [StringLength(250)]
-        public string ClientSecret { get; set; }
+        public string ClientSecrets { get; set; }
 
         public bool Enable { get; set; } = true;
         public bool RequireClientSecret { get; set; } = true;
@@ -42,6 +42,7 @@ namespace IdentityServer.Areas.HeliosAdminUI.Models.Clients.Submodel
             set => _redirectUris = String.Format("{0}{1}", value, "/signin-oidc");
         }
 
+        [Display(Name ="Allowed grant type")]
         public ICollection<string> AllowedGrantTypes
         {
             get
@@ -82,6 +83,7 @@ namespace IdentityServer.Areas.HeliosAdminUI.Models.Clients.Submodel
 
         public string AllowedScopesString { get; set; }
 
+        [Display(Name ="Allowed scopes")]
         public IEnumerable<string> AllowedScopes
         {
             get
