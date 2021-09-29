@@ -21,149 +21,154 @@
 <a asp-action="GetAll" class="btn btn-primary mb-3"> <i class="bi bi-arrow-left-circle-fill"></i> Go back </a>
 
 
-<div id="accordion">
-    <form method="post" asp-controller="Clients" asp-action="Create">
-        <div class="card">
-            <div class="card-header" id="headingOne">
-                <h3 class="mb-0">
-                    <button class="btn w-100" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        <strong class="h5"> Basics <i class="bi bi-caret-down-fill"></i> </strong>
-                    </button>
-                </h3>
-            </div>
-
-            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="form-group col-6">
-                            <LabelInfo asp-for="ClientId"></LabelInfo>
-                            <div>
-                                <input asp-for="ClientId" class="form-control" />
-                            </div>
-                            <span class="text-danger" asp-validation-for="ClientId"></span>
-                        </div>
-
-                        <div class="form-group col-6">
-                            <LabelInfo asp-for="ClientName" information-category="1"></LabelInfo>
-                            <div>
-                                <input asp-for="ClientName" class="form-control" />
-                            </div>
-                            <span class="text-danger" asp-validation-for="ClientName"></span>
-                        </div>
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">Create Client</h4>
+        <hr />
+        <div id="accordion">
+            <form method="post" asp-controller="Clients" asp-action="Create">
+                <div class="card">
+                    <div class="card-header" id="headingOne">
+                        <h3 class="mb-0">
+                            <button class="btn w-100" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <strong class="h5"> Basics <i class="bi bi-caret-down-fill"></i> </strong>
+                            </button>
+                        </h3>
                     </div>
-                    <div class="row">
-                        <div class="form-group col-12">
-                            <LabelInfo asp-for="ClientSecrets" information-category="1"></LabelInfo>
-                            <div class="d-flex align-items-center">
-                                <input asp-for="ClientSecrets" class="form-control w-50 mr-2" />
-                                <span class="text-success d-inline">Make sure to <strong>keep a record</strong> of your secret somewhere.</span>
+
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="form-group col-6">
+                                    <LabelInfo asp-for="ClientId"></LabelInfo>
+                                    <div>
+                                        <input asp-for="ClientId" class="form-control" />
+                                    </div>
+                                    <span class="text-danger" asp-validation-for="ClientId"></span>
+                                </div>
+
+                                <div class="form-group col-6">
+                                    <LabelInfo asp-for="ClientName" information-category="1"></LabelInfo>
+                                    <div>
+                                        <input asp-for="ClientName" class="form-control" />
+                                    </div>
+                                    <span class="text-danger" asp-validation-for="ClientName"></span>
+                                </div>
                             </div>
-                            <span class="text-danger" asp-validation-for="ClientSecrets"></span>
+                            <div class="row">
+                                <div class="form-group col-12">
+                                    <LabelInfo asp-for="ClientSecrets" information-category="1"></LabelInfo>
+                                    <div class="d-flex align-items-center">
+                                        <input asp-for="ClientSecrets" class="form-control w-50 mr-2" />
+                                        <span class="text-success d-inline">Make sure to <strong>keep a record</strong> of your secret somewhere.</span>
+                                    </div>
+                                    <span class="text-danger" asp-validation-for="ClientSecrets"></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-header" id="headingTwo">
-                <h5 class="mb-0">
-                    <button class="btn collapsed w-100" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                        <strong class="h5">Uris <i class="bi bi-caret-down-fill"></i></strong>
-                    </button>
-                </h5>
-            </div>
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="form-group col-4">
-                            <LabelInfo asp-for="RedirectUris" information-category="1"></LabelInfo>
-                            <div class="input-group">
-                                <input asp-for="RedirectUris" class="form-control" />
-                                <div class="input-group-append">
-                                    <span class="input-group-text">/signin-oidc</span>
+                <div class="card">
+                    <div class="card-header" id="headingTwo">
+                        <h5 class="mb-0">
+                            <button class="btn collapsed w-100" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                <strong class="h5">Uris <i class="bi bi-caret-down-fill"></i></strong>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="form-group col-4">
+                                    <LabelInfo asp-for="RedirectUris" information-category="1"></LabelInfo>
+                                    <div class="input-group">
+                                        <input asp-for="RedirectUris" class="form-control" />
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">/signin-oidc</span>
+                                        </div>
+                                    </div>
+                                    <span class="text-danger" asp-validation-for="RedirectUris"></span>
                                 </div>
-                            </div>
-                            <span class="text-danger" asp-validation-for="RedirectUris"></span>
-                        </div>
 
-                        <div class="form-group col-4">
-                            <LabelInfo asp-for="FrontChannelLogoutUri" information-category="1"></LabelInfo>
-                            <div class="input-group">
-                                <input asp-for="FrontChannelLogoutUri" class="form-control" />
-                                <div class="input-group-append">
-                                    <span class="input-group-text">/signout-oidc</span>
+                                <div class="form-group col-4">
+                                    <LabelInfo asp-for="FrontChannelLogoutUri" information-category="1"></LabelInfo>
+                                    <div class="input-group">
+                                        <input asp-for="FrontChannelLogoutUri" class="form-control" />
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">/signout-oidc</span>
+                                        </div>
+                                    </div>
+                                    <span class="text-danger" asp-validation-for="FrontChannelLogoutUri"></span>
+                                </div>
+                                <div class="form-group col-4">
+                                    <LabelInfo asp-for="PostLogoutRedirectUris" information-category="1"></LabelInfo>
+                                    <div class="input-group">
+                                        <input asp-for="PostLogoutRedirectUris" class="form-control" />
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">/signout-callback-oidc</span>
+                                        </div>
+                                    </div>
+                                    <span class="text-danger" asp-validation-for="PostLogoutRedirectUris"></span>
                                 </div>
                             </div>
-                            <span class="text-danger" asp-validation-for="FrontChannelLogoutUri"></span>
-                        </div>
-                        <div class="form-group col-4">
-                            <LabelInfo asp-for="PostLogoutRedirectUris" information-category="1"></LabelInfo>
-                            <div class="input-group">
-                                <input asp-for="PostLogoutRedirectUris" class="form-control" />
-                                <div class="input-group-append">
-                                    <span class="input-group-text">/signout-callback-oidc</span>
-                                </div>
-                            </div>
-                            <span class="text-danger" asp-validation-for="PostLogoutRedirectUris"></span>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-header" id="headingThree">
-                <h5 class="mb-0">
-                    <button class="btn w-100 collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                        <strong class="h5">Grants & Scopes <i class="bi bi-caret-down-fill"></i></strong>
-                    </button>
-                </h5>
-            </div>
-            <div id="collapseThree" class="collapse" aria-labelledby="headingThree">
-                <div class="card-body">
-                    <div class="row">
-                        <div class=" form-group col-6">
-                            <LabelInfo asp-for="AllowedGrantTypes" information-category="1"></LabelInfo>
-                            <div>
-                                <select asp-for="GrantTypesKey" asp-items="Model.GrantTypesList"></select>
+                <div class="card">
+                    <div class="card-header" id="headingThree">
+                        <h5 class="mb-0">
+                            <button class="btn w-100 collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                <strong class="h5">Grants & Scopes <i class="bi bi-caret-down-fill"></i></strong>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class=" form-group col-6">
+                                    <LabelInfo asp-for="AllowedGrantTypes" information-category="1"></LabelInfo>
+                                    <div>
+                                        <select asp-for="GrantTypesKey" asp-items="Model.GrantTypesList"></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class=" form-group col-10">
+                                    <LabelInfo asp-for="AllowedScopes" information-category="1"></LabelInfo>
+                                    <p><u>Add default scopes by clicking on it:</u></p>
+                                    @foreach (var scope in Model.StandardScopes)
+                                    {
+                                        <button type="button" class="btn btn-outline-primary scope-toggler" value="@scope">@scope</button>
+                                    }
+                                    <br />
+                                    <p><u>Create new custom scopes:</u></p>
+                                    <div class="keyHandler d-flex col-5">
+                                        <button class="btn centered" type="button" id="addKey"> <i class="bi bi-plus"></i> </button>
+                                        <input type="text" placeholder="Keyword + Enter" id="keysInput">
+                                    </div>
+                                    <div class="addedKeysHolder"></div>
+
+
+                                    <!-- Just give this input the name="etc" attribute -->
+                                    <input id="tag-holder" asp-for="AllowedScopesString" type="hidden">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <hr />
-                    <div class="row">
-                        <div class=" form-group col-6">
-                            <LabelInfo asp-for="AllowedScopes" information-category="1"></LabelInfo>
-                            <p><u>Add default scopes by clicking on it:</u></p>
-                            @foreach (var scope in Model.StandardScopes)
-                            {
-                                <button type="button" class="btn btn-outline-primary scope-toggler" value="@scope">@scope</button>
-                            }
-                            <br />
-                            <p><u>Create new custom scopes:</u></p>
-                            <div class="keyHandler d-flex">
-                                <button class="btn centered" type="button" id="addKey"> <i class="bi bi-plus"></i> </button>
-                                <input type="text" placeholder="Keyword + Enter" id="keysInput">
-                            </div>
-                            <div class="addedKeysHolder"></div>
-
-
-                            <!-- Just give this input the name="etc" attribute -->
-                            <input id="tag-holder" asp-for="AllowedScopesString" type="hidden">
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-
-                        <div class="col-2">
-                            <button class="btn btn-success btn-block">Create <i class="bi bi-check-square ml-1"></i></button>
-                        </div>
-
                     </div>
                 </div>
-            </div>
+
+                <div class="form-group row mt-3">
+
+                    <div class="col-2">
+                        <button class="btn btn-success btn-block">Create <i class="bi bi-check-square ml-1"></i></button>
+                    </div>
+
+                </div>
+            </form>
         </div>
-    </form>
+    </div>
 </div>
-
 @section Scripts
 {
     <script src="@Url.Content("~/js/site.js")"></script>

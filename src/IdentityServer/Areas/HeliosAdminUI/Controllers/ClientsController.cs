@@ -48,8 +48,10 @@ namespace IdentityServer.Areas.HeliosAdminUI.Controllers
         }
 
         // GET: ClientsController/Create
-        public ActionResult Create()
+        public ActionResult Create(bool isSuccess)
         {
+            ViewBag.isSuccess = isSuccess;
+
             var vm = new CreateClientViewModel();
             return View(vm);
         }

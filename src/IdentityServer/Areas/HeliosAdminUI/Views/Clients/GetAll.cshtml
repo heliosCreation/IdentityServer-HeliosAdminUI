@@ -22,54 +22,57 @@
 }
 <div class="row p-3 m-3">
     <a class="btn btn-primary" asp-controller="Clients" asp-action="Index"> <i class="bi bi-arrow-left-circle-fill"></i> Go back</a>
-
     <a class="btn btn-success ml-auto" asp-controller="Clients" asp-action="Create">Add a Client <i class="bi bi-lightning"></i></a>
-
 </div>
-<div class="row border p-3 m-3">
 
-    <table class="table table-bordered table-hover">
-        <thead class="thead-dark">
-            <tr>
-                <th scope="col">ClientId</th>
-                <th scope="col">ClientName</th>
-                <th scope="col">AllowedGrantTypes</th>
-                <th scope="col">AllowedScopes</th>
-                <th scope="col">Actions</th>
+<div class=" card row border p-3 m-3">
+    <div class="card-body">
+        <h4 class="card-title">Client list</h4>
+        <hr />
+        <table class="table table-bordered table-hover bg-light">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">ClientId</th>
+                    <th scope="col">ClientName</th>
+                    <th scope="col">AllowedGrantTypes</th>
+                    <th scope="col">AllowedScopes</th>
+                    <th scope="col">Actions</th>
 
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var client in Model)
-            {
-            <tr>
-                <td>@client.ClientId</td>
-                <td>@client.ClientName</td>
-                <td>
-                    @foreach (var grantType in client.AllowedGrantTypes)
-                    {
-                        <p>@grantType</p>
-                    }
-                </td>
-                <td>
-                    @foreach (var scope in client.AllowedScopes)
-                    {
-                        <p>@scope</p>
-                    }
-                </td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@client.Id" class="btn btn-primary text-white">
-                        <i class="bi bi-receipt"></i>
-                    </a>
-                    <a asp-action="Edit" asp-route-id="@client.Id" class="btn btn-success text-white">
-                        <i class="bi bi-pen"></i>
-                    </a>
-                    <a asp-action="Delete" asp-route-id="@client.Id" class="btn btn-danger text-white">
-                        <i class="bi bi-trash"></i>
-                    </a>
-                </td>
-            </tr>
-        }
-        </tbody>
-    </table>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var client in Model)
+                {
+                    <tr>
+                        <td>@client.ClientId</td>
+                        <td>@client.ClientName</td>
+                        <td>
+                            @foreach (var grantType in client.AllowedGrantTypes)
+                            {
+                                <p>@grantType</p>
+                            }
+                        </td>
+                        <td>
+                            @foreach (var scope in client.AllowedScopes)
+                            {
+                                <p>@scope</p>
+                            }
+                        </td>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@client.Id" class="btn btn-primary text-white">
+                                <i class="bi bi-receipt"></i>
+                            </a>
+                            <a asp-action="Edit" asp-route-id="@client.Id" class="btn btn-success text-white">
+                                <i class="bi bi-pen"></i>
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@client.Id" class="btn btn-danger text-white">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
 </div>
