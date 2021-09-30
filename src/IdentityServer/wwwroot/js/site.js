@@ -82,7 +82,7 @@ function ShowPanel() {
             .closest(".collapse")
             .index(".collapse");
 
-        $(".card").eq(index).children(".collapse").show()
+        $(".card").eq(index + 1).children(".collapse").show()
     }
 }
 

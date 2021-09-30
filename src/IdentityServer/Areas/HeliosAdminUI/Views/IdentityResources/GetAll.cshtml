@@ -25,37 +25,44 @@
     <a class="btn btn-success ml-auto" asp-controller="IdentityResources" asp-action="Create">Add Identity Resource <i class="bi bi-lightning"></i></a>
 
 </div>
-<div class="row border p-3 m-3">
-
-    <table class="table table-bordered table-hover">
-        <thead class="thead-dark">
-            <tr>
-                <th scope="col">Name</th>
-                <th scope="col">DisplayName</th>
-                <th scope="col">ClaimList</th>
-                <th scope="col">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var identityResource in Model.IdentityResourcesList)
-            {
+<div class="card">
+    <div class="card-header identity-resource-theme"></div>
+    <div class="card-body">
+        <h4 class="card-title">Identity resources List</h4>
+        <hr />
+        <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
                 <tr>
-                    <td>@identityResource.Name</td>
-                    <td>@identityResource.DisplayName</td>
-                    <td>@foreach (var claim in identityResource.UserClaims)
-                    {
-                        <p>@claim</p>
-                    }</td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@identityResource.Id" class="btn btn-success text-white">
-                            <i class="bi bi-pen"></i>
-                        </a>
-                        <a asp-action="Delete" asp-route-id="@identityResource.Id" class="btn btn-danger text-white">
-                            <i class="bi bi-trash"></i>
-                        </a>
-                    </td>
+                    <th scope="col">Name</th>
+                    <th scope="col">DisplayName</th>
+                    <th scope="col">ClaimList</th>
+                    <th scope="col">Actions</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var identityResource in Model.IdentityResourcesList)
+                {
+                    <tr>
+                        <td>@identityResource.Name</td>
+                        <td>@identityResource.DisplayName</td>
+                        <td>
+                            @foreach (var claim in identityResource.UserClaims)
+                            {
+                                <p>@claim</p>
+                            }
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@identityResource.Id" class="btn btn-success text-white">
+                                <i class="bi bi-pen"></i>
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@identityResource.Id" class="btn btn-danger text-white">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
 </div>

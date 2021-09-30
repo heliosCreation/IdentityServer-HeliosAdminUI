@@ -1,4 +1,7 @@
-﻿<div class="container">
+﻿
+<div class="container">
+    <a asp-controller="Home" asp-action="Index" class="btn btn-primary mb-3"> <i class="bi bi-arrow-left-circle-fill"></i> Go back to admin home</a>
+
     <div class="row">
         <div class="col-lg-6">
             <div class="card text-center">
@@ -6,7 +9,7 @@
                 </div>
                 <div class="card-body mt-5 mb-5">
                     <h5 class="card-title">List <i class="bi bi-table"></i> </h5>
-                    <p class="card-text">Display all of your registered Api scopes.</p>
+                    <p class="card-text">Display all of your registered API scopes.</p>
                     <a asp-controller="ApiScopes" asp-action="GetAll" class="btn btn-primary">Show me</a>
                 </div>
             </div>
@@ -14,12 +17,10 @@
 
         <div class="col-lg-6">
             <div class="card text-center">
-                <div class="card-header api-scopes-theme">
-
-                </div>
+                <div class="card-header api-scopes-theme"></div>
                 <div class="card-body mt-5 mb-5">
                     <h5 class="card-title">Create  <i class="bi bi-lightning"></i> </h5>
-                    <p class="card-text">Create a new ApiScope</p>
+                    <p class="card-text">Create a new API scope</p>
                     <a asp-controller="ApiScopes" asp-action="Create" class="btn btn-primary">Create</a>
                 </div>
             </div>

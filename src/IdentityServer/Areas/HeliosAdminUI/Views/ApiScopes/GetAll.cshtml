@@ -22,45 +22,51 @@
 <div class="row p-3 m-3">
     <a class="btn btn-primary" asp-controller="ApiScopes" asp-action="Index"> <i class="bi bi-arrow-left-circle-fill"></i> Go back</a>
 
-    <a class="btn btn-success ml-auto" asp-controller="ApiScopes" asp-action="Create">Add Api Scope <i class="bi bi-lightning"></i></a>
+    <a class="btn btn-success ml-auto" asp-controller="ApiScopes" asp-action="Create">Add API Scope <i class="bi bi-lightning"></i></a>
 
 </div>
-<div class="row border p-3 m-3">
 
-    <table class="table table-bordered table-hover">
-        <thead class="thead-dark">
-            <tr>
-                <th scope="col">Name</th>
-                <th scope="col">DisplayName</th>
-                <th scope="col">Description</th>
-                <th scope="col">Required</th>
-                <th scope="col">Enabled</th>
-                <th scope="col">Emphasize</th>
-                <th scope="col">Show in Discovery Document</th>
-                <th scope="col">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var apiScope in Model.ApiScopes)
-            {
-            <tr>
-                <td>@apiScope.Name</td>
-                <td>@apiScope.DisplayName</td>
-                <td>@apiScope.Description</td>
-                <td>@apiScope.Enabled</td>
-                <td>@apiScope.Required</td>
-                <td>@apiScope.Emphasize</td>
-                <td>@apiScope.ShowInDiscoveryDocument</td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@apiScope.Id" class="btn btn-success text-white">
-                        <i class="bi bi-pen"></i>
-                    </a>
-                    <a asp-action="Delete" asp-route-id="@apiScope.Id" class="btn btn-danger text-white">
-                        <i class="bi bi-trash"></i>
-                    </a>
-                </td>
-            </tr>
-            }
-        </tbody>
-    </table>
+<div class="card">
+    <div class="card-header api-scopes-theme"></div>
+    <div class="card-body">
+        <h4 class="card-title">API Scope list</h4>
+        <hr />
+        <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">DisplayName</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Required</th>
+                    <th scope="col">Enabled</th>
+                    <th scope="col">Emphasize</th>
+                    <th scope="col">Show in Discovery Document</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var apiScope in Model.ApiScopes)
+                {
+                    <tr>
+                        <td>@apiScope.Name</td>
+                        <td>@apiScope.DisplayName</td>
+                        <td>@apiScope.Description</td>
+                        <td>@apiScope.Enabled</td>
+                        <td>@apiScope.Required</td>
+                        <td>@apiScope.Emphasize</td>
+                        <td>@apiScope.ShowInDiscoveryDocument</td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@apiScope.Id" class="btn btn-success text-white">
+                                <i class="bi bi-pen"></i>
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@apiScope.Id" class="btn btn-danger text-white">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
 </div>

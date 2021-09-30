@@ -1,9 +1,11 @@
 ﻿@model ClientViewModel;
-<h1 class="h3 text-center"><u>Delete Client</u></h1>
+
+<a asp-action="GetAll" class="btn btn-primary mb-3"> <i class="bi bi-arrow-left-circle-fill"></i> Go back to List</a>
 
 <div class="card">
+    <div class="card-header client-theme"></div>
     <div class="card-body">
-        <h4 class="card-title">Delete your api scope</h4>
+        <h4 class="card-title">Delete Client</h4>
         <hr />
         <form method="post" asp-controller="Clients" asp-action="Delete" asp-route-id="@Model.Id">
             <p>Are you sure you want to delete <strong>@Model.ClientName</strong>? <br /> The action will be irreversible.</p>

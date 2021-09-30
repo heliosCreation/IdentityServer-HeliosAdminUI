@@ -1,8 +1,11 @@
-﻿@model IdentityServer.Areas.HeliosAdminUI.Models.ApiScopes.ApiScopeViewModel;
+﻿@model IdentityServer.Areas.HeliosAdminUI.Models.ApiScopes.ApiScopeViewModel
+
+<a asp-action="GetAll" class="btn btn-primary mb-3"> <i class="bi bi-arrow-left-circle-fill"></i> Go back to List</a>
 
 <div class="card">
+    <div class="card-header api-scopes-theme"></div>
     <div class="card-body">
-        <h4 class="card-title">Delete your api scope</h4>
+        <h4 class="card-title">Delete your API scope</h4>
         <hr />
         <form method="post" asp-controller="ApiScopes" asp-action="Delete" asp-route-id="@Model.Id">
             <p>Are you sure you want to delete <strong>@Model.Name</strong>? <br /> The action will be irreversible.</p>
