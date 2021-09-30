@@ -2,6 +2,7 @@
   "profiles": {
     "SelfHost": {
       "commandName": "Project",
+      "commandLineArgs": "/seedUsers",
       "launchBrowser": true,
       "launchUrl": "Account/Login",
       "environmentVariables": {

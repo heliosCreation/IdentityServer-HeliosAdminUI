@@ -5,6 +5,7 @@
 using System;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using IdentityModel;
 using IdentityServer.Data;
 using IdentityServer.Models;
@@ -20,7 +21,41 @@ namespace IdentityServer
 {
     public class SeedData
     {
-        public static void EnsureSeedUsersData(string connectionString)
+
+        public async static Task EnsureSeedRoles(string connectionString)
+        {
+            var services = new ServiceCollection();
+            services.AddLogging();
+            services.AddDbContext<ApplicationDbContext>(options =>
+               options.UseSqlServer(connectionString));
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
+            using var serviceProvider = services.BuildServiceProvider();
+            using var scope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope();
+                
+            var context = scope.ServiceProvider.GetService<ApplicationDbContext>();
+            context.Database.Migrate();
+
+            var roleMgr = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var roleExist = await roleMgr.RoleExistsAsync("Admin");
+            if (!roleExist)
+            {
+                try
+                {
+                    var role = new IdentityRole("Admin");
+                    await roleMgr.CreateAsync(role);
+                    Log.Information("Role seeding successfull");
+                }
+                catch (Exception ex)
+                {
+
+                    Log.Error(ex, "An error occured while seeding the roles in the database");
+                }
+            }
+        }
+        public async static Task EnsureSeedUsersData(string connectionString)
         {
             var services = new ServiceCollection();
             services.AddLogging();
@@ -31,80 +66,114 @@ namespace IdentityServer
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            using (var serviceProvider = services.BuildServiceProvider())
+            using var serviceProvider = services.BuildServiceProvider();
+            using var scope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope();
+                
+            var context = scope.ServiceProvider.GetService<ApplicationDbContext>();
+            context.Database.Migrate();
+
+            var userMgr = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            var roleMgr = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            #region AliceCreation
+            var alice = await userMgr.FindByNameAsync("alice");
+            if (alice == null)
             {
-                using (var scope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
+                alice = new ApplicationUser
                 {
-                    var context = scope.ServiceProvider.GetService<ApplicationDbContext>();
-                    context.Database.Migrate();
+                    UserName = "alice",
+                    Email = "AliceSmith@email.com",
+                    EmailConfirmed = true,
+                };
+                var result = await userMgr.CreateAsync(alice, "Pass123$");
+                if (!result.Succeeded)
+                {
+                    throw new Exception(result.Errors.First().Description);
+                }
 
-                    var userMgr = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-                    var alice = userMgr.FindByNameAsync("alice").Result;
-                    if (alice == null)
-                    {
-                        alice = new ApplicationUser
-                        {
-                            UserName = "alice",
-                            Email = "AliceSmith@email.com",
-                            EmailConfirmed = true,
-                        };
-                        var result = userMgr.CreateAsync(alice, "Pass123$").Result;
-                        if (!result.Succeeded)
-                        {
-                            throw new Exception(result.Errors.First().Description);
-                        }
+                result = userMgr.AddClaimsAsync(alice, new Claim[]{
+                    new Claim(JwtClaimTypes.Name, "Alice Smith"),
+                    new Claim(JwtClaimTypes.GivenName, "Alice"),
+                    new Claim(JwtClaimTypes.FamilyName, "Smith"),
+                    new Claim(JwtClaimTypes.WebSite, "http://alice.com"),
+                }).Result;
 
-                        result = userMgr.AddClaimsAsync(alice, new Claim[]{
-                            new Claim(JwtClaimTypes.Name, "Alice Smith"),
-                            new Claim(JwtClaimTypes.GivenName, "Alice"),
-                            new Claim(JwtClaimTypes.FamilyName, "Smith"),
-                            new Claim(JwtClaimTypes.WebSite, "http://alice.com"),
-                        }).Result;
-                        if (!result.Succeeded)
-                        {
-                            throw new Exception(result.Errors.First().Description);
-                        }
-                        Log.Debug("alice created");
-                    }
-                    else
-                    {
-                        Log.Debug("alice already exists");
-                    }
+                if (!result.Succeeded)
+                {
+                    throw new Exception(result.Errors.First().Description);
+                }
+                Log.Information("alice created");
+            }
+            else
+            {
+                Log.Error("alice already exists");
+            }
+            #endregion
+            #region BobCreation
+            var bob = await userMgr.FindByNameAsync("bob");
+            if (bob == null)
+            {
+                bob = new ApplicationUser
+                {
+                    UserName = "bob",
+                    Email = "BobSmith@email.com",
+                    EmailConfirmed = true
+                };
+                var result = await userMgr.CreateAsync(bob, "Pass123$");
+                if (!result.Succeeded)
+                {
+                    throw new Exception(result.Errors.First().Description);
+                }
 
-                    var bob = userMgr.FindByNameAsync("bob").Result;
-                    if (bob == null)
+                result = userMgr.AddClaimsAsync(bob, new Claim[]{
+                    new Claim(JwtClaimTypes.Name, "Bob Smith"),
+                    new Claim(JwtClaimTypes.GivenName, "Bob"),
+                    new Claim(JwtClaimTypes.FamilyName, "Smith"),
+                    new Claim(JwtClaimTypes.WebSite, "http://bob.com"),
+                    new Claim("location", "somewhere")
+                }).Result;
+                if (!result.Succeeded)
+                {
+                    throw new Exception(result.Errors.First().Description);
+                }
+                Log.Information("bob created");
+            }
+            else
+            {
+                Log.Error("bob already exists");
+            }
+            #endregion
+            #region AdminCreation
+            var admin = new ApplicationUser
+            {
+                UserName = "admin",
+                Email = "admin@gmail.com",
+                EmailConfirmed = true,
+                PhoneNumberConfirmed = true
+            };
+            if (userMgr.Users.All(u => u.Id != admin.Id))
+            {
+                var user = await userMgr.FindByEmailAsync(admin.Email);
+                if (user == null)
+                {
+                    //Change the password on first connection
+                    var creationResult = await userMgr.CreateAsync(admin, "Pwd12345!");
+                    if (!creationResult.Succeeded)
                     {
-                        bob = new ApplicationUser
-                        {
-                            UserName = "bob",
-                            Email = "BobSmith@email.com",
-                            EmailConfirmed = true
-                        };
-                        var result = userMgr.CreateAsync(bob, "Pass123$").Result;
-                        if (!result.Succeeded)
-                        {
-                            throw new Exception(result.Errors.First().Description);
-                        }
-
-                        result = userMgr.AddClaimsAsync(bob, new Claim[]{
-                            new Claim(JwtClaimTypes.Name, "Bob Smith"),
-                            new Claim(JwtClaimTypes.GivenName, "Bob"),
-                            new Claim(JwtClaimTypes.FamilyName, "Smith"),
-                            new Claim(JwtClaimTypes.WebSite, "http://bob.com"),
-                            new Claim("location", "somewhere")
-                        }).Result;
-                        if (!result.Succeeded)
-                        {
-                            throw new Exception(result.Errors.First().Description);
-                        }
-                        Log.Debug("bob created");
+                        throw new Exception(creationResult.Errors.First().Description);
                     }
-                    else
+                    var roleResult = await userMgr.AddToRoleAsync(admin, "Admin");
+                    if (!roleResult.Succeeded)
                     {
-                        Log.Debug("bob already exists");
+                        throw new Exception(roleResult.Errors.First().Description);
                     }
+                    Log.Information("admin created");
+                }
+                else
+                {
+                    Log.Error("admin already exist");
                 }
             }
+            #endregion
         }
 
         public static void EnsureSeedConfigurationAndOperationalData(string connectionString)

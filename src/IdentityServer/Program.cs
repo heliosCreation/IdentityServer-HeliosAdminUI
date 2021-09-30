@@ -11,12 +11,13 @@ using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace IdentityServer
 {
     public class Program
     {
-        public static int Main(string[] args)
+        public async static Task<int> Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
@@ -37,10 +38,15 @@ namespace IdentityServer
 
             try
             {
+                var seedRoles = args.Contains("/seedRoles");
                 var seedUsers = args.Contains("/seedUsers");
                 var seedConfig = args.Contains("/seedConfig");
-                var seeded = false; 
+                var seeded = false;
 
+                if (seedRoles)
+                {
+                    args = args.Except(new[] { "/seedRoles" }).ToArray();
+                }
                 if (seedUsers)
                 {
                     args = args.Except(new[] { "/seedUsers" }).ToArray();
@@ -52,12 +58,21 @@ namespace IdentityServer
 
                 var host = CreateHostBuilder(args).Build();
 
+                if (seedRoles)
+                {
+                    Log.Information("Seeding roles in database...");
+                    var config = host.Services.GetRequiredService<IConfiguration>();
+                    var connectionString = config.GetConnectionString("UserStore");
+                    await SeedData.EnsureSeedRoles(connectionString);
+                    Log.Information("Done seeding roles in database.");
+                    seeded = true;
+                }
                 if (seedUsers)
                 {
                     Log.Information("Seeding Users database...");
                     var config = host.Services.GetRequiredService<IConfiguration>();
                     var connectionString = config.GetConnectionString("UserStore");
-                    SeedData.EnsureSeedUsersData(connectionString);
+                    await SeedData.EnsureSeedUsersData(connectionString);
                     Log.Information("Done seeding users database.");
                     seeded = true;
                 }
