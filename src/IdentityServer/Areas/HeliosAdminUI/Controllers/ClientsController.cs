@@ -2,17 +2,17 @@
 using IdentityServer.Areas.HeliosAdminUI.Models.Clients;
 using IdentityServer.Areas.HeliosAdminUI.Services.Contracts;
 using IdentityServer4.Models;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Entities = IdentityServer4.EntityFramework.Entities;
 using Is4Mapper = IdentityServer4.EntityFramework.Mappers;
 
 namespace IdentityServer.Areas.HeliosAdminUI.Controllers
 {
     [Area("HeliosAdminUI")]
+    [Authorize(Roles = "IsAdmin")]
     public class ClientsController : Controller
     {
         private readonly IClientRepository _clientRepository;

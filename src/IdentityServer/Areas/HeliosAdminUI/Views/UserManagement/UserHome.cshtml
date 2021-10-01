@@ -1,0 +1,31 @@
+﻿<a asp-action="Index" class="btn btn-primary mb-3"> <i class="bi bi-arrow-left-circle-fill"></i> Go back to User Management home</a>
+
+<div class="row d-flex justify-content-center mt-3">
+    <div class="col-lg-6">
+        <div class="card text-center">
+            <div class="card-header sub-user-theme">
+
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">List</h5>
+                <p class="card-text">Access a list of all users stored on the server.</p>
+                <a asp-controller="UserManagement" asp-action="GetAllUsers" class="btn btn-primary">Go </a>
+            </div>
+            <div class="card-footer sub-user-theme"></div>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="card text-center">
+            <div class="card-header sub-user-theme">
+
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Create User</h5>
+                <p class="card-text">Create a new User and grant him/her roles.</p>
+                <a asp-controller="UserManagement" asp-action="CreateUser" class="btn btn-primary">Go </a>
+            </div>
+            <div class="card-footer sub-user-theme"></div>
+        </div>
+    </div>
+</div>

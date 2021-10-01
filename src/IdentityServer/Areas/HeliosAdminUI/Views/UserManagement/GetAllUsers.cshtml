@@ -1,0 +1,82 @@
+﻿@model List<UserWithRoles>;
+@{
+    if (ViewBag.Error == true)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            An error occured while processing your request. Contact your administrator. <br />
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+    if (ViewBag.isSuccess == true)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            Your operation was a success. <br />
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+}
+<div class="row p-3 m-3">
+    <a class="btn btn-primary"  asp-action="UserHome"> <i class="bi bi-arrow-left-circle-fill"></i> Go back</a>
+
+    <a class="btn btn-success ml-auto" asp-action="Create">Add API Scope <i class="bi bi-lightning"></i></a>
+
+</div>
+
+<div class="card">
+    <div class="card-header sub-user-theme"></div>
+    <div class="card-body">
+        <h4 class="card-title">Users list</h4>
+        <hr />
+        <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">UserName</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">EmailConfirmed</th>
+                    <th scope="col">LockoutEnabled</th>
+                    <th scope="col">Roles</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td>@user.UserName</td>
+                        <td>@user.Email</td>
+                        <td>@user.EmailConfirmed</td>
+                        <td>@user.LockoutEnabled</td>
+                        <td>
+                            @{ 
+                                if (user.Roles.Count > 0)
+                                {
+                                    foreach (var role in user.Roles)
+                                    {
+                                        <p>@role</p>
+                                    }
+                                }
+                                else
+                                {
+                                    <p class="font-italic text-muted">None</p>
+                                }
+                            }
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@user.Id" class="btn btn-success text-white">
+                                <i class="bi bi-pen"></i>
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@user.Id" class="btn btn-danger text-white">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>

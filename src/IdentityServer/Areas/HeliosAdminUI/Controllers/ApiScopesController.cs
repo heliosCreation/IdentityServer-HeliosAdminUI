@@ -2,6 +2,7 @@
 using IdentityServer.Areas.HeliosAdminUI.Models.ApiScopes;
 using IdentityServer.Areas.HeliosAdminUI.Services.Contracts;
 using IdentityServer4.EntityFramework.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 namespace IdentityServer.Areas.HeliosAdminUI.Controllers
 {
     [Area("HeliosAdminUI")]
+    [Authorize(Roles = "IsAdmin")]
     public class ApiScopesController : Controller
     {
         private readonly IApiScopeRepository _apiScopeRepository;

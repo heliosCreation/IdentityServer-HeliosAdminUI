@@ -1,3 +1,31 @@
-﻿@{ 
-    <p>@User.IsInRole("IsAdmin")</p>
-}
+﻿<a asp-controller="Home" asp-action="Index" class="btn btn-primary mb-3"> <i class="bi bi-arrow-left-circle-fill"></i> Go back to admin home</a>
+
+<div class="row d-flex justify-content-center mt-3">
+    <div class="col-lg-6">
+        <div class="card text-center">
+            <div class="card-header sub-user-theme">
+
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Users</h5>
+                <p class="card-text">Manage the Users and their roles.</p>
+                <a asp-controller="UserManagement" asp-action="UserHome" class="btn btn-primary">Go </a>
+            </div>
+            <div class="card-footer sub-user-theme"></div>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="card text-center">
+            <div class="card-header sub-role-theme">
+
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Roles</h5>
+                <p class="card-text">Manage the Roles.</p>
+                <a asp-controller="UserManagement" asp-action="Index" class="btn btn-primary">Go </a>
+            </div>
+            <div class="card-footer sub-role-theme"></div>
+        </div>
+    </div>
+</div>

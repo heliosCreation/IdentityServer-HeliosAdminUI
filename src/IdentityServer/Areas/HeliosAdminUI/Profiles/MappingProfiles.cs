@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using Entities = IdentityServer4.EntityFramework.Entities;
 using ModelEntities = IdentityServer4.Models;
 using IdentityServer4.Models;
+using IdentityServer.Models;
+using IdentityServer.Areas.HeliosAdminUI.Models.UserManagement;
 
 namespace IdentityServer.Areas.HeliosAdminUI.Profiles
 {
@@ -51,6 +53,10 @@ namespace IdentityServer.Areas.HeliosAdminUI.Profiles
                 .ForMember(c => c.RedirectUris, opt => opt.MapFrom(src => new List<string> { src.RedirectUris }))
                 .ForMember(c => c.PostLogoutRedirectUris, opt => opt.MapFrom(src => new List<string> { src.PostLogoutRedirectUris }));
 
+            #endregion
+
+            #region Users
+            CreateMap<ApplicationUser, UserWithRoles>();
             #endregion
 
         }

@@ -3,15 +3,15 @@ using IdentityServer.Areas.HeliosAdminUI.Helpers;
 using IdentityServer.Areas.HeliosAdminUI.Models.IdentityResources;
 using IdentityServer.Areas.HeliosAdminUI.Services.Contracts;
 using IdentityServer4.EntityFramework.Entities;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace IdentityServer.Areas.HeliosAdminUI.Controllers
 {
     [Area("HeliosAdminUI")]
+    [Authorize(Roles = "IsAdmin")]
     public class IdentityResourcesController : Controller
     {
         private readonly IIdentityResourceRepository _identityResourceRepository;
