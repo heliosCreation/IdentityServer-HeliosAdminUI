@@ -39,12 +39,12 @@ namespace IdentityServer
             context.Database.Migrate();
 
             var roleMgr = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            var roleExist = await roleMgr.RoleExistsAsync("Admin");
+            var roleExist = await roleMgr.RoleExistsAsync("IsAdmin");
             if (!roleExist)
             {
                 try
                 {
-                    var role = new IdentityRole("Admin");
+                    var role = new IdentityRole("IsAdmin");
                     await roleMgr.CreateAsync(role);
                     Log.Information("Role seeding successfull");
                 }
@@ -161,12 +161,14 @@ namespace IdentityServer
                     {
                         throw new Exception(creationResult.Errors.First().Description);
                     }
-                    var roleResult = await userMgr.AddToRoleAsync(admin, "Admin");
+                    Log.Information("admin created");
+
+                    var roleResult = await userMgr.AddToRoleAsync(admin, "ISAdmin");
                     if (!roleResult.Succeeded)
                     {
                         throw new Exception(roleResult.Errors.First().Description);
                     }
-                    Log.Information("admin created");
+                    Log.Information("admin added to role.");
                 }
                 else
                 {
