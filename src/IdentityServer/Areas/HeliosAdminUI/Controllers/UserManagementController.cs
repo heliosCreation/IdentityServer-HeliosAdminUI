@@ -40,8 +40,11 @@ namespace IdentityServer.Areas.HeliosAdminUI.Controllers
         {
             return View();
         }
-        public async Task<IActionResult> GetAllUsers()
+        public async Task<IActionResult> GetAllUsers(bool isSuccess = false, bool error = false)
         {
+            ViewBag.isSuccess = isSuccess;
+            ViewBag.error = error;
+
             var users = await _userMgr.Users.ToListAsync();
             var vm = _mapper.Map<List<UserWithRoles>>(users);
             foreach (var user in vm)
@@ -110,25 +113,37 @@ namespace IdentityServer.Areas.HeliosAdminUI.Controllers
             }
         }
 
-        // GET: UserManagementController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<IActionResult> DeleteUser(string? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var entity = await _userMgr.FindByIdAsync(id);
+            if (entity == null)
+            {
+                return NotFound();
+            }
+            var vm = _mapper.Map<UserWithRoles>(entity);
+            return View(vm);
         }
 
-        // POST: UserManagementController/Delete/5
-        [HttpPost]
+        [HttpPost, ActionName("DeleteUser")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> DeleteUserConfirmed(string id)
         {
-            try
+            var user = await _userMgr.FindByIdAsync(id);
+            if (user == null)
             {
-                return RedirectToAction(nameof(Index));
+                return NotFound();
             }
-            catch
+            var deleted = await _userMgr.DeleteAsync(user);
+            if (deleted.Succeeded)
             {
-                return View();
+                return RedirectToAction(nameof(GetAllUsers), new { isSuccess = true });
             }
+            return RedirectToAction(nameof(GetAllUsers), new { error = true });
         }
     }
 }
