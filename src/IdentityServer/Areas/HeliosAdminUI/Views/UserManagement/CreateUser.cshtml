@@ -1,0 +1,111 @@
+﻿@model CreateUserWithRoleWithViewModel
+@section style{
+
+    <link href="~/css/TagsInput.css" rel="stylesheet" />
+}
+@{
+    if (ViewBag.isSuccess == true)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            Your new User has been added successfully. <br />
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+}
+<a asp-action="GetAllUsers" class="btn btn-primary mb-3"> <i class="bi bi-arrow-left-circle-fill"></i> Go back to List </a>
+
+<div class="card">
+    <div class="card-header identity-resource-theme"></div>
+    <div class="card-body">
+        <h4 class="card-title">Create new User</h4>
+        <hr />
+        <form method="post" asp-action="CreateUser">
+            <div class="row">
+                <div class="form-group col-6">
+                    <label asp-for="UserName" class="col-form-label"></label>
+                    <div>
+                        <input asp-for="UserName" class="form-control" />
+                    </div>
+                    <span class="text-danger" asp-validation-for="UserName"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-6">
+                    <label asp-for="Password" class="col-form-label"></label>
+                    <div>
+                        <input asp-for="Password" class="form-control" />
+                    </div>
+                    <span class="text-danger" asp-validation-for="Password"></span>
+                </div>
+
+                <div class="form-group col-6">
+                    <label asp-for="ConfirmationPassword" class="col-form-label"></label>
+                    <div>
+                        <input asp-for="ConfirmationPassword" class="form-control" />
+                    </div>
+                    <span class="text-danger" asp-validation-for="ConfirmationPassword"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-6">
+                    <label asp-for="Email" class="col-form-label"></label>
+                    <div>
+                        <input asp-for="Email" class="form-control" />
+                    </div>
+                    <span class="text-danger" asp-validation-for="Email"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-6">
+                    <div class="form-control-plaintext">
+                        <div class="custom-control custom-checkbox">
+                            <input asp-for="EmailConfirmed"  class="custom-control-input" />
+                            <label asp-for="EmailConfirmed" class="custom-control-label"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-6">
+                    <label asp-for="RolesString" class="col-form-label"></label>
+                    <div>
+                        @foreach (var role in Model.RoleChoices)
+                        {
+                            <input type="checkbox" name="roles" value="@role">
+                            <label for="@role">@role</label>
+                        }
+                    </div>
+                    <input id="tag-holder" asp-for="RolesString" type="hidden">
+                </div>
+            </div>
+            <hr />
+
+            <div class="form-group row">
+
+                <div class="col-2">
+                    <button class="btn btn-success btn-block">Create <i class="bi bi-check-square ml-1"></i></button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function ()
+        {
+            $('input[name="roles"]').click(function () {
+
+                var newVal = $('input[name="roles"]:checked').map(function () {
+                    return this.value;
+                }).get().join();
+                $("#tag-holder").val(newVal);
+            });
+        });
+    </script>
+}

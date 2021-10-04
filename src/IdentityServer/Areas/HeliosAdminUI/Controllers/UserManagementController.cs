@@ -53,25 +53,40 @@ namespace IdentityServer.Areas.HeliosAdminUI.Controllers
             return View(vm);
         }
 
-        // GET: UserManagementController/Create
-        public ActionResult Create()
+        [HttpGet]
+        public ActionResult CreateUser(bool isSuccess = false)
         {
-            return View();
+            ViewBag.isSuccess = isSuccess;
+           var vm = new CreateUserWithRoleWithViewModel();
+           vm.RoleChoices = _roleMgr.Roles.Select(x => x.Name).ToList();
+
+           return View(vm);
         }
 
         // POST: UserManagementController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> CreateUser(CreateUserWithRoleWithViewModel model)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                return View(model);
             }
-            catch
+            var user = _mapper.Map<ApplicationUser>(model);
+            var result = await _userMgr.CreateAsync(user, model.Password);
+            if (result.Succeeded)
             {
-                return View();
+                foreach (var role in model.Roles)
+                {
+                    var roleResult = await _userMgr.AddToRoleAsync(user, role);
+                    if (!roleResult.Succeeded)
+                    {
+                        ModelState.AddModelError(string.Empty, "An error occured while adding this user to his roles. Please contact your administrator.");
+                        return View(model);
+                    }
+                }
             }
+            return RedirectToAction(nameof(CreateUser), new { isSuccess = true });
         }
 
         // GET: UserManagementController/Edit/5

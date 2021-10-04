@@ -57,6 +57,7 @@ namespace IdentityServer.Areas.HeliosAdminUI.Profiles
 
             #region Users
             CreateMap<ApplicationUser, UserWithRoles>();
+            CreateMap<CreateUserWithRoleWithViewModel, ApplicationUser>();
             #endregion
 
         }
