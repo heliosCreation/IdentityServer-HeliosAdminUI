@@ -1,0 +1,58 @@
+﻿@model List<RoleViewModel>;
+@{
+    if (ViewBag.error == true)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            An error occured while processing your request. Contact your administrator. <br />
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+    if (ViewBag.isSuccess == true)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            Your operation was a success. <br />
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+}
+<div class="row p-3 m-3">
+    <a class="btn btn-primary" asp-action="RoleHome"> <i class="bi bi-arrow-left-circle-fill"></i> Go back</a>
+
+    <a class="btn btn-success ml-auto" asp-action="CreateRole">Create Role <i class="bi bi-lightning"></i></a>
+
+</div>
+
+<div class="card">
+    <div class="card-header sub-role-theme"></div>
+    <div class="card-body">
+        <h4 class="card-title">Roles list</h4>
+        <hr />
+        <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var role in Model)
+                {
+                    <tr>
+                        <td>@role.Name</td>
+
+                        <td class="text-center">
+                            <a asp-action="DeleteRole" asp-route-id="@role.Id" class="btn btn-danger text-white">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>

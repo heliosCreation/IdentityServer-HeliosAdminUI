@@ -1,0 +1,15 @@
+﻿@model RoleViewModel;
+
+<a asp-action="GetAllRoles" class="btn btn-primary mb-3"> <i class="bi bi-arrow-left-circle-fill"></i> Go back to List</a>
+
+<div class="card">
+    <div class="card-header sub-role-theme"></div>
+    <div class="card-body">
+        <h4 class="card-title">Delete User</h4>
+        <hr />
+        <form method="post" asp-controller="UserManagement" asp-action="DeleteRole" asp-route-id="@Model.Id">
+            <p>Are you sure you want to delete the role <strong>@Model.Name</strong>? <br /> The action will be irreversible.</p>
+            <button class="btn btn-danger btn-block">Delete <i class="bi bi-trash ml-1"></i></button>
+        </form>
+    </div>
+</div>

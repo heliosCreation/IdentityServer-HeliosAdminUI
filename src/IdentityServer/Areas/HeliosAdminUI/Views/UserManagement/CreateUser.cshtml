@@ -13,16 +13,20 @@
             </button>
         </div>
     }
+    if (ViewBag.error == true)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" asp-validation-summary="All">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
 }
-<div class="alert alert-danger alert-dismissible fade show" role="alert" asp-validation-summary="All">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>
+
 <a asp-action="GetAllUsers" class="btn btn-primary mb-3"> <i class="bi bi-arrow-left-circle-fill"></i> Go back to List </a>
 
 <div class="card">
-    <div class="card-header identity-resource-theme"></div>
+    <div class="card-header sub-user-theme"></div>
     <div class="card-body">
         <h4 class="card-title">Create new User</h4>
         <hr />

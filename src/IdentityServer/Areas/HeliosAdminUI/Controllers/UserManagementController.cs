@@ -39,6 +39,13 @@ namespace IdentityServer.Areas.HeliosAdminUI.Controllers
         {
             return View();
         }
+
+        public ActionResult RoleHome()
+        {
+            return View();
+        }
+
+
         public async Task<IActionResult> GetAllUsers(bool isSuccess = false, bool error = false)
         {
             ViewBag.isSuccess = isSuccess;
@@ -55,6 +62,21 @@ namespace IdentityServer.Areas.HeliosAdminUI.Controllers
             return View(vm);
         }
 
+        public async Task<IActionResult> GetAllRoles()
+        {
+            var roles = await _roleMgr.Roles.ToListAsync();
+            var vm = new List<RoleViewModel>();
+            foreach (var role in roles)
+            {
+                vm.Add(new RoleViewModel
+                {
+                    Id = role.Id,
+                    Name = role.Name
+                });
+            }
+            return View(vm);
+        }
+
         [HttpGet]
         public ActionResult CreateUser(bool isSuccess = false)
         {
@@ -62,6 +84,14 @@ namespace IdentityServer.Areas.HeliosAdminUI.Controllers
             var vm = new CreateUserWithRoleWithViewModel();
             vm.RoleChoices = _roleMgr.Roles.Select(x => x.Name).ToList();
 
+            return View(vm);
+        }
+
+        [HttpGet]
+        public ActionResult CreateRole(bool isSuccess = false)
+        {
+            ViewBag.isSuccess = isSuccess;
+            var vm = new CreateRoleViewModel();
             return View(vm);
         }
 
@@ -76,8 +106,9 @@ namespace IdentityServer.Areas.HeliosAdminUI.Controllers
             var user = _mapper.Map<ApplicationUser>(model);
             var EmailExist = await _userMgr.FindByEmailAsync(user.Email);
             var nameExist = await _userMgr.FindByNameAsync(user.UserName);
-            if (EmailExist!= null || nameExist != null)
+            if (EmailExist != null || nameExist != null)
             {
+                ViewBag.error = true;
                 ModelState.AddModelError(string.Empty, "User with given Username/Email already exist.");
                 model.RoleChoices = _roleMgr.Roles.Select(x => x.Name).ToList();
                 return View(model);
@@ -98,7 +129,30 @@ namespace IdentityServer.Areas.HeliosAdminUI.Controllers
             return RedirectToAction(nameof(CreateUser), new { isSuccess = true });
         }
 
-        // GET: UserManagementController/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateRole(CreateRoleViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var roleExist = await _roleMgr.RoleExistsAsync(model.Name);
+            if (!roleExist)
+            {
+                var result = await _roleMgr.CreateAsync(new IdentityRole(model.Name));
+                if (result.Succeeded)
+                {
+                    return RedirectToAction(nameof(CreateRole), new { isSuccess = true });
+                }
+                return RedirectToAction(nameof(GetAllRoles), new { error = true });
+
+            }
+            ViewBag.error = true;
+            ModelState.AddModelError(string.Empty, "A role with this Name already exist");
+            return View(model);
+
+        }
         public async Task<IActionResult> EditUserRoles(string id, bool isSuccess = false, bool error = false)
         {
             ViewBag.isSuccess = isSuccess;
@@ -140,6 +194,7 @@ namespace IdentityServer.Areas.HeliosAdminUI.Controllers
 
         }
 
+        [HttpGet]
         public async Task<IActionResult> DeleteUser(string id)
         {
             var entity = await _userMgr.FindByIdAsync(id);
@@ -148,6 +203,23 @@ namespace IdentityServer.Areas.HeliosAdminUI.Controllers
                 return NotFound();
             }
             var vm = _mapper.Map<UserWithRoles>(entity);
+            return View(vm);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DeleteRole(string id)
+        {
+            var entity = await _roleMgr.FindByIdAsync(id);
+            if (entity == null)
+            {
+                return NotFound();
+            }
+
+            var vm = new RoleViewModel()
+            {
+                Id = entity.Id,
+                Name = entity.Name
+            };
             return View(vm);
         }
 
@@ -166,6 +238,24 @@ namespace IdentityServer.Areas.HeliosAdminUI.Controllers
                 return RedirectToAction(nameof(GetAllUsers), new { isSuccess = true });
             }
             return RedirectToAction(nameof(GetAllUsers), new { error = true });
+        }
+
+        [HttpPost, ActionName("DeleteRole")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteRoleConfirmed(string id)
+        {
+            var entity = await _roleMgr.FindByIdAsync(id);
+            if (entity == null)
+            {
+                return NotFound();
+            }
+            var result = await _roleMgr.DeleteAsync(entity);
+            if (result.Succeeded)
+            {
+                return RedirectToAction(nameof(GetAllRoles), new { isSuccess = true });
+            }
+            return RedirectToAction(nameof(GetAllRoles), new { error = true });
+
         }
     }
 }
