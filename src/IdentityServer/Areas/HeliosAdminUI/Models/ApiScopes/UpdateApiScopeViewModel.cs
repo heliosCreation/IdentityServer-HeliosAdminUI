@@ -10,21 +10,27 @@ namespace IdentityServer.Areas.HeliosAdminUI.Models.ApiScopes
 
         [Required]
         [MaxLength(250)]
+        [Display(Name="Name")]
         public string Name { get; set; }
 
         [Required]
         [MaxLength(250)]
+        [Display(Name = "Display name")]
         public string DisplayName { get; set; }
 
         [MaxLength(250)]
+        [Display(Name = "Description")]
         public string Description { get; set; }
 
         [Required]
+        [Display(Name = "Required")]
         public bool Required { get; set; }
 
+        [Display(Name = "Emphasize")]
         public bool Emphasize { get; set; }
 
         [Required]
+        [Display(Name = "Enabled")]
         public bool Enabled { get; set; }
 
         [Required]

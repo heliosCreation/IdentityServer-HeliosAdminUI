@@ -29,9 +29,13 @@
             and <a href="https://github.com/IdentityServer/IdentityServer4/tree/main/samples">ready to use samples</a>.
         </li>
 
-        <li>
-            Click <a  asp-controller="Account" asp-action="Login">here</a> to Login
-        </li>
+        @if (!User.Identity.IsAuthenticated)
+        {
+            <li>
+                Click <a asp-controller="Account" asp-action="Login">here</a> to Login
+            </li>
+        }
+
     </ul>
 
 </div>

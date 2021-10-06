@@ -1,4 +1,4 @@
-﻿@model IdentityServer.Areas.HeliosAdminUI.Models.ApiScopes.CreateApiScopeModel;
+﻿@model CreateApiScopeModel;
 
 @{
     if (ViewBag.isSuccess == true)
@@ -21,7 +21,7 @@
         <form method="post" asp-controller="ApiScopes" asp-action="Create">
             <div class="row">
                 <div class="form-group col-6">
-                    <label asp-for="Name" class="col-form-label"></label>
+                    <LabelInfo asp-for="Name"></LabelInfo>
                     <div>
                         <input asp-for="Name" class="form-control" />
                     </div>
@@ -29,7 +29,7 @@
                 </div>
 
                 <div class="form-group col-6">
-                    <label asp-for="DisplayName" class="col-form-label"></label>
+                    <LabelInfo asp-for="DisplayName"></LabelInfo>
                     <div>
                         <input asp-for="DisplayName" class="form-control" />
                     </div>
@@ -38,45 +38,30 @@
             </div>
             <div class="row">
                 <div class="form-group col-12">
-                    <label asp-for="Description" class="col-form-label"></label>
+                    <LabelInfo asp-for="Description"></LabelInfo>
                     <div>
                         <textarea cols="20" rows="10" asp-for="Description" class="form-control"></textarea>
                     </div>
                 </div>
             </div>
             <div class="form-group row">
-                <div class="col-3">
-                    <div class="form-control-plaintext">
-                        <div class="custom-control custom-checkbox">
-                            <input asp-for="Emphasize" type="checkbox" class="custom-control-input" />
-                            <label asp-for="Emphasize" class="custom-control-label"></label>
-                        </div>
-                    </div>
+                <div class="col-2">
+                    <LabelInfo asp-for="Emphasize"></LabelInfo>
+                    <input asp-for="Emphasize" type="checkbox" />
                 </div>
-                <div class="col-3">
-                    <div class="form-control-plaintext">
-                        <div class="custom-control custom-checkbox">
-                            <input asp-for="Required" type="checkbox" class="custom-control-input" />
-                            <label asp-for="Required" class="custom-control-label"></label>
-                        </div>
-                    </div>
+                <div class="col-2">
+                    <LabelInfo asp-for="Required"></LabelInfo>
+                    <input asp-for="Required" type="checkbox"/>
                 </div>
 
-                <div class="col-3">
-                    <div class="form-control-plaintext">
-                        <div class="custom-control custom-checkbox">
-                            <input asp-for="Enabled" type="checkbox" class="custom-control-input" />
-                            <label asp-for="Enabled" class="custom-control-label"></label>
-                        </div>
-                    </div>
+                <div class="col-2">
+                    <LabelInfo asp-for="Enabled"></LabelInfo>
+                    <input asp-for="Enabled" type="checkbox"/>
                 </div>
-                <div class="col-lg-3">
-                    <div class="form-control-plaintext">
-                        <div class="custom-control custom-checkbox">
-                            <input asp-for="ShowInDiscoveryDocument" type="checkbox" class="custom-control-input" />
-                            <label asp-for="ShowInDiscoveryDocument" class="custom-control-label"></label>
-                        </div>
-                    </div>
+                <div class="col-lg-4">
+                    <LabelInfo asp-for="ShowInDiscoveryDocument"></LabelInfo>
+                    <input asp-for="ShowInDiscoveryDocument" type="checkbox" />
+
                 </div>
             </div>
             <hr />

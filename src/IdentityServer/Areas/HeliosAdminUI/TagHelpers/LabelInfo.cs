@@ -41,7 +41,7 @@ namespace IdentityServer.Areas.HeliosAdminUI.TagHelpers
             {
                 dictionary = ClientsInfo.Data;
             }
-            else if(containerName.Contains("apiscopes"))
+            else if(containerName.Contains("apiscope"))
             {
                 dictionary = ApiScopesInfo.Data;
             }
