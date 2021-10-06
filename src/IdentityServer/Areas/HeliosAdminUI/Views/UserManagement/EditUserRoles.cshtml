@@ -1,0 +1,70 @@
+﻿@model UpdateUseRolesViewModel
+@section style{
+
+    @*<link href="~/css/TagsInput.css" rel="stylesheet" />*@
+}
+@{
+    if (ViewBag.error == true)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            There was an error while updating your user, if the problem persist, contact your administrator. <br />
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+}
+<a asp-action="GetAllUsers" class="btn btn-primary mb-3"> <i class="bi bi-arrow-left-circle-fill"></i> Go back to List </a>
+
+<div class="card">
+    <div class="card-header identity-resource-theme"></div>
+    <div class="card-body">
+        <h4 class="card-title">Update User Roles</h4>
+        <hr />
+        <form method="post" asp-action="EditUserRoles">
+            <input type="hidden" asp-for="Id" />
+            <div class="row">
+                <div class="form-group col-6">
+                    <label asp-for="RolesString" class="col-form-label"></label>
+                    <div>
+                        @foreach (var role in Model.RoleChoices)
+                        {
+                            <input type="checkbox" name="roles" value="@role"
+                                   @(Model.Roles.Contains(role) ? "checked='checked'":"")>
+                            <label for="@role">@role</label>
+                        }
+                    </div>
+                    <input id="tag-holder" asp-for="RolesString" type="hidden">
+                </div>
+            </div>
+            <hr />
+
+            <div class="form-group row">
+
+                <div class="col-2">
+                    <button class="btn btn-success btn-block">Update <i class="bi bi-check-square ml-1"></i></button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('input[name="roles"]').click(function () {
+
+                setCheck();
+            });
+        });
+
+        function setCheck() {
+            var newVal = $('input[name="roles"]:checked').map(function () {
+                return this.value;
+            }).get().join();
+            $("#tag-holder").val(newVal);
+        }
+    </script>
+}

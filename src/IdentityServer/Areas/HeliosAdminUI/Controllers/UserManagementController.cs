@@ -2,7 +2,6 @@
 using IdentityServer.Areas.HeliosAdminUI.Models.UserManagement;
 using IdentityServer.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +12,7 @@ using System.Threading.Tasks;
 namespace IdentityServer.Areas.HeliosAdminUI.Controllers
 {
     [Area("HeliosAdminUI")]
-    [Authorize(Roles ="IsAdmin")]
+    [Authorize(Roles = "IsAdmin")]
     public class UserManagementController : Controller
     {
         private readonly UserManager<ApplicationUser> _userMgr;
@@ -60,13 +59,12 @@ namespace IdentityServer.Areas.HeliosAdminUI.Controllers
         public ActionResult CreateUser(bool isSuccess = false)
         {
             ViewBag.isSuccess = isSuccess;
-           var vm = new CreateUserWithRoleWithViewModel();
-           vm.RoleChoices = _roleMgr.Roles.Select(x => x.Name).ToList();
+            var vm = new CreateUserWithRoleWithViewModel();
+            vm.RoleChoices = _roleMgr.Roles.Select(x => x.Name).ToList();
 
-           return View(vm);
+            return View(vm);
         }
 
-        // POST: UserManagementController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateUser(CreateUserWithRoleWithViewModel model)
@@ -76,6 +74,14 @@ namespace IdentityServer.Areas.HeliosAdminUI.Controllers
                 return View(model);
             }
             var user = _mapper.Map<ApplicationUser>(model);
+            var EmailExist = await _userMgr.FindByEmailAsync(user.Email);
+            var nameExist = await _userMgr.FindByNameAsync(user.UserName);
+            if (EmailExist!= null || nameExist != null)
+            {
+                ModelState.AddModelError(string.Empty, "User with given Username/Email already exist.");
+                model.RoleChoices = _roleMgr.Roles.Select(x => x.Name).ToList();
+                return View(model);
+            }
             var result = await _userMgr.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {
@@ -93,33 +99,49 @@ namespace IdentityServer.Areas.HeliosAdminUI.Controllers
         }
 
         // GET: UserManagementController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<IActionResult> EditUserRoles(string id, bool isSuccess = false, bool error = false)
         {
-            return View();
+            ViewBag.isSuccess = isSuccess;
+            ViewBag.error = error;
+
+            var user = await _userMgr.FindByIdAsync(id);
+            var vm = _mapper.Map<UpdateUseRolesViewModel>(user);
+
+            var roles = _roleMgr.Roles.Select(x => x.Name);
+            vm.RoleChoices = _roleMgr.Roles.Select(x => x.Name).ToList();
+            vm.RolesString = string.Join(",", await _userMgr.GetRolesAsync(user));
+
+            return View(vm);
         }
 
-        // POST: UserManagementController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> EditUserRoles(string id, UpdateUseRolesViewModel model)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
 
-        public async Task<IActionResult> DeleteUser(string? id)
-        {
-            if (id == null)
+            var user = await _userMgr.FindByIdAsync(id);
+            if (user == null)
             {
                 return NotFound();
             }
+            var DBroles = await _userMgr.GetRolesAsync(user);
+            var roleRemoveResult = await _userMgr.RemoveFromRolesAsync(user, DBroles);
+            if (!roleRemoveResult.Succeeded)
+            {
+                return RedirectToAction(nameof(EditUserRoles), new { error = true });
+            }
 
+            var addToRoleResult = await _userMgr.AddToRolesAsync(user, model.Roles);
+            if (!roleRemoveResult.Succeeded)
+            {
+                return RedirectToAction(nameof(EditUserRoles), new { error = true });
+            }
+            return RedirectToAction(nameof(GetAllUsers), new { isSuccess = true });
+
+        }
+
+        public async Task<IActionResult> DeleteUser(string id)
+        {
             var entity = await _userMgr.FindByIdAsync(id);
             if (entity == null)
             {

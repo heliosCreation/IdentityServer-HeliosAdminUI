@@ -14,6 +14,11 @@
         </div>
     }
 }
+<div class="alert alert-danger alert-dismissible fade show" role="alert" asp-validation-summary="All">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
 <a asp-action="GetAllUsers" class="btn btn-primary mb-3"> <i class="bi bi-arrow-left-circle-fill"></i> Go back to List </a>
 
 <div class="card">
@@ -62,7 +67,7 @@
                 <div class="form-group col-6">
                     <div class="form-control-plaintext">
                         <div class="custom-control custom-checkbox">
-                            <input asp-for="EmailConfirmed"  class="custom-control-input" />
+                            <input asp-for="EmailConfirmed" class="custom-control-input" />
                             <label asp-for="EmailConfirmed" class="custom-control-label"></label>
                         </div>
                     </div>
@@ -97,8 +102,7 @@
 @section Scripts
 {
     <script>
-        $(document).ready(function ()
-        {
+        $(document).ready(function () {
             $('input[name="roles"]').click(function () {
 
                 var newVal = $('input[name="roles"]:checked').map(function () {
