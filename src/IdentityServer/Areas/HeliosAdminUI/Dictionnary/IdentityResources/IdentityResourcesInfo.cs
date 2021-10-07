@@ -1,7 +1,5 @@
-﻿using System;
+﻿using IdentityServer4.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace IdentityServer.Areas.HeliosAdminUI.Dictionnary.IdentityResources
 {
@@ -9,7 +7,10 @@ namespace IdentityServer.Areas.HeliosAdminUI.Dictionnary.IdentityResources
     {
         public static Dictionary<string, string> Data = new Dictionary<string, string>
         {
-            {"ClientId","identity resources dic" }
+            {nameof(IdentityResource.Name),"The unique name of the resource." },
+            {nameof(IdentityResource.DisplayName),"Display name of the resource." },
+            {nameof(IdentityResource.UserClaims),"List of associated user claims that should be included when this resource is requested." }
+
         };
     }
 }

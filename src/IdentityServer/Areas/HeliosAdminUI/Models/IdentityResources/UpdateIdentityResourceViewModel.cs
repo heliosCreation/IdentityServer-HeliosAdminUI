@@ -10,8 +10,11 @@ namespace IdentityServer.Areas.HeliosAdminUI.Models.IdentityResources
         public int Id { get; set; }
 
         [Required]
+        [Display(Name ="Name")]
         public string Name { get; set; }
+
         [Required]
+        [Display(Name = "Display name")]
         public string DisplayName { get; set; }
 
         private string userClaimsString;
@@ -22,6 +25,7 @@ namespace IdentityServer.Areas.HeliosAdminUI.Models.IdentityResources
             get { return this.UserClaims.Count > 0 ? IdentityResourceClaimsHelper.CreateString(UserClaims) : userClaimsString; }
             set { userClaimsString =  value; }
         }
+        [Display(Name ="User Claim(s)")]
         public List<IdentityResourceClaim> UserClaims { get; set; } = new List<IdentityResourceClaim>();
     }
 }

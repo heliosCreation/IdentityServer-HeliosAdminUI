@@ -24,7 +24,7 @@
         <form method="post" asp-controller="IdentityResources" asp-action="Create">
             <div class="row">
                 <div class="form-group col-6">
-                    <label asp-for="Name" class="col-form-label"></label>
+                    <LabelInfo asp-for="Name"></LabelInfo>
                     <div>
                         <input asp-for="Name" class="form-control" />
                     </div>
@@ -32,7 +32,7 @@
                 </div>
 
                 <div class="form-group col-6">
-                    <label asp-for="DisplayName" class="col-form-label"></label>
+                    <LabelInfo asp-for="DisplayName"></LabelInfo>
                     <div>
                         <input asp-for="DisplayName" class="form-control" />
                     </div>
@@ -41,7 +41,7 @@
             </div>
             <div class="row">
                 <div class="form-group col-6">
-                    <label asp-for="UserClaimsString" class="col-form-label"></label>
+                    <LabelInfo asp-for="UserClaims"></LabelInfo>
 
                     <div class="keyHandler d-flex">
                         <button class="btn centered" type="button" id="addKey"> <i class="bi bi-plus"></i> </button>

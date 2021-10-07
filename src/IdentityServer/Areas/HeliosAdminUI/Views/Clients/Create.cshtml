@@ -20,8 +20,8 @@
 <a asp-action="GetAll" class="btn btn-primary mb-3"> <i class="bi bi-arrow-left-circle-fill"></i> Go back to List</a>
 
 <div class="card">
+    <div class="card-header client-theme"></div>
     <div class="card-body">
-        <div class="card-header client-theme"></div>
         <h4 class="card-title">Create Client</h4>
         <hr />
         <div id="accordion">
@@ -141,7 +141,7 @@
                                         <button type="button" class="btn btn-outline-primary scope-toggler" value="@scope">@scope</button>
                                     }
                                     <br />
-                                    <p><u>Create new custom scopes:</u></p>
+                                    <p class="mt-3"><u>Create new custom scopes:</u></p>
                                     <div class="keyHandler d-flex col-5">
                                         <button class="btn centered" type="button" id="addKey"> <i class="bi bi-plus"></i> </button>
                                         <input type="text" placeholder="Keyword + Enter" id="keysInput">
