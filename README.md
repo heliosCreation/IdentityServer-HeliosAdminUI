@@ -83,8 +83,6 @@ Now that the preparation is done. I'm gonna walk you through the interface and t
 First we'll have to login with the admin account. If the login is successful, in the upper right corner of the navigation bar you should see a new dropdown: 
 <img width="954" alt="HomeDropdown" src="https://user-images.githubusercontent.com/71494857/136767072-a12c3c02-e393-4a1a-866e-cb9c5574134c.PNG">
 
-Clicking on it will reveal the options you've got access to: 
-![Dropdown](https://user-images.githubusercontent.com/71494857/136753448-2168313c-5cda-4982-9c3a-9b709cf81628.png)
 
 We are first going to access the home page: 
 ![HomePage](https://user-images.githubusercontent.com/71494857/136753753-40b0e18e-3d85-431d-80a8-f1696142bd5a.png)
