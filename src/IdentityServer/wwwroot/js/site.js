@@ -36,14 +36,14 @@ function resetKey() {
     for (let i = 1; i <= $('.addedKeysHolder span').length; i++)
     {
         let theKey = $(`.addedKeysHolder span:nth-child(${i})`).text()
-        console.log(theKey)
+        //console.log(theKey)
         let prevVal = $('#tag-holder').val() + ','
         $('#tag-holder').val(prevVal + theKey)
     }
     var $j_object = $('.scope-toggler.btn-primary')
     $j_object.each(function () {
         let key = $(this).val();
-        console.log(key);
+        //console.log(key);
         let prevVal = $('#tag-holder').val() + ','
         $('#tag-holder').val(prevVal + key)
 
@@ -62,9 +62,9 @@ function manageScopeTogglerkeys(obj) {
     obj.toggleClass("btn-outline-primary");
     obj.toggleClass("btn-primary");
     if (~$('#tag-holder').val().indexOf(key)) {
-        console.log(',' + key)
+        //console.log(',' + key)
         let newVal = $('#tag-holder').val().replace(',' + key, "");
-        console.log(newVal);
+        //console.log(newVal);
         $('#tag-holder').val(newVal)
     }
     else {
