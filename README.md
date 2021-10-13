@@ -33,19 +33,19 @@ Since the migrations files are already in the project, all you have to do in to 
 Open your package manager and run those commands:
 
 ```bash
-Update-database -c ApplicationDbContext 
+Update-database -Context ApplicationDbContext 
 ```
 
 ```bash
-Update-database -c PersistedGrantDbContext 
+Update-database -Context PersistedGrantDbContext 
 ```
 
 ```bash
-Update-database -c ConfigurationDbContext
+Update-database -Context ConfigurationDbContext
 ```
 
 ```bash
-Update-database -c CustomConfigurationDbContext 
+Update-database -Context CustomConfigurationDbContext 
 ```
 
 And here we go, just like that our stores are ready to be used. 
