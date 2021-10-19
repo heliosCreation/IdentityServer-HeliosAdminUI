@@ -36,9 +36,12 @@ namespace IdentityServer.Areas.HeliosAdminUI.Services
                 .FirstOrDefaultAsync();
         }
 
-        public override async Task<bool> UpdateAsync( int id, Client newEntity)
+        public override async Task<bool> UpdateAsync(int id, Client newEntity)
         {
             var oldEntity = await GetByIdAsync(id);
+            oldEntity.AllowOfflineAccess = newEntity.AllowOfflineAccess;
+            oldEntity.UpdateAccessTokenClaimsOnRefresh = newEntity.UpdateAccessTokenClaimsOnRefresh;
+            oldEntity.AccessTokenLifetime = newEntity.AccessTokenLifetime;
             oldEntity.ClientId = newEntity.ClientId;
             oldEntity.ClientName = newEntity.ClientName;
             oldEntity.RedirectUris = newEntity.RedirectUris;

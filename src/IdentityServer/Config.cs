@@ -50,6 +50,9 @@ namespace IdentityServer
                     PostLogoutRedirectUris = { "https://localhost:5002/signout-callback-oidc" },
 
                     AllowOfflineAccess = true,
+                    AccessTokenLifetime = 120,
+                    UpdateAccessTokenClaimsOnRefresh = true,
+
                     AllowedScopes = new List<string>
                     {
                            IdentityServerConstants.StandardScopes.OpenId,
