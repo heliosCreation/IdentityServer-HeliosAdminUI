@@ -12,5 +12,8 @@ namespace IdentityServer.Areas.HeliosAdminUI.Models.Clients
         public string FrontChannelLogoutUri { get; set; }
         public string PostLogoutRedirectUris { get; set; }
         public IEnumerable<string> AllowedScopes { get; set; }
+        public bool AllowOfflineAccess { get; set; }
+        public bool UpdateAccessTokenClaimsOnRefresh { get; set; }
+        public int AccessTokenLifetime { get; set; }
     }
 }

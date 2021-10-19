@@ -157,6 +157,37 @@
                     </div>
                 </div>
 
+                <div class="card">
+                    <div class="card-header" id="headingFour">
+                        <h5 class="mb-0">
+                            <button class="btn w-100 collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                <strong class="h5">Refresh Token<i class="bi bi-caret-down-fill"></i></strong>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseFour" class="collapse" aria-labelledby="headingThree">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class=" form-group col-6">
+                                    <LabelInfo asp-for="AllowOfflineAccess"></LabelInfo>
+                                    <input asp-for="AllowOfflineAccess" />
+                                </div>
+                                <div class=" form-group col-6">
+                                    <LabelInfo asp-for="UpdateAccessTokenClaimsOnRefresh"></LabelInfo>
+                                    <input asp-for="UpdateAccessTokenClaimsOnRefresh" />
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="form-group col-12">
+                                    <LabelInfo asp-for="AccessTokenLifetime"></LabelInfo>
+                                    <input asp-for="AccessTokenLifetime" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="form-group row mt-3">
 
                     <div class="col-2">

@@ -23,12 +23,12 @@ namespace IdentityServer.Areas.HeliosAdminUI.Controllers
             _clientRepository = clientRepository ?? throw new ArgumentNullException(nameof(clientRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
-        // GET: ClientsController
+
+
         public ActionResult Index()
         {
             return View();
         }
-
 
         public async Task<IActionResult> GetAll(bool isSuccess, bool error = false)
         {
@@ -47,7 +47,6 @@ namespace IdentityServer.Areas.HeliosAdminUI.Controllers
             return View(vm);
         }
 
-        // GET: ClientsController/Create
         public ActionResult Create(bool isSuccess)
         {
             ViewBag.isSuccess = isSuccess;
@@ -56,7 +55,6 @@ namespace IdentityServer.Areas.HeliosAdminUI.Controllers
             return View(vm);
         }
 
-        // POST: ClientsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateClientViewModel model)
@@ -78,7 +76,6 @@ namespace IdentityServer.Areas.HeliosAdminUI.Controllers
             return View(model);
         }
 
-        // GET: ClientsController/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
             var entity = await _clientRepository.GetByIdAsync(id);

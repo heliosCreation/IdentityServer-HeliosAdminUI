@@ -21,7 +21,7 @@ namespace IdentityServer.Areas.HeliosAdminUI.TagHelpers
             string containerName = AspFor.Metadata.ContainerType.Name;
             var dictionary = GetDictionnaryInfo(containerName);
             string name = AspFor.Metadata.PropertyName;
-            var information = dictionary.Count > 0 ? dictionary[name] : "";
+            var information = dictionary.Count > 0 && dictionary.ContainsKey(name) ? dictionary[name] : "";
 
             output.TagName = "div";
             output.PreContent.SetHtmlContent($@"

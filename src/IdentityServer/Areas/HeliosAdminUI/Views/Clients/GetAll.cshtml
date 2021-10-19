@@ -33,10 +33,11 @@
         <table class="table table-bordered table-hover bg-light">
             <thead class="thead-dark">
                 <tr>
-                    <th scope="col">ClientId</th>
-                    <th scope="col">ClientName</th>
-                    <th scope="col">AllowedGrantTypes</th>
-                    <th scope="col">AllowedScopes</th>
+                    <th scope="col">Client Id</th>
+                    <th scope="col">Client Name</th>
+                    <th scope="col">Allowed Grant Types</th>
+                    <th scope="col">Allowed Scopes</th>
+                    <th scope="col">Allow Offline Access</th>
                     <th scope="col">Actions</th>
 
                 </tr>
@@ -58,6 +59,9 @@
                             {
                                 <p>@scope</p>
                             }
+                        </td>
+                        <td>
+                            @client.AllowOfflineAccess.ToString()
                         </td>
                         <td>
                             <a asp-action="Details" asp-route-id="@client.Id" class="btn btn-primary text-white">
