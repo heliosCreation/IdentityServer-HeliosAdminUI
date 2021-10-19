@@ -95,7 +95,7 @@ All of the sections presented above, when clicked, will take you to a page with 
 <br/>
 <h5>A - The List </h5>
 Would you choose to access the List, you will be taken to a page letting you see you resources along with the major fields defining it. <br/>
-Three options are also given here: Create, Update and Delete. Following the basics of a CRUD implementation.
+Three options are also given here: Create, Update and Delete. Following the basics of a CRUD implementation.<br/>
 <img width="913" alt="ApiScopeListed" src="https://user-images.githubusercontent.com/71494857/136755653-93b4085d-d4e7-4546-a163-227adffc4898.PNG">
 
 <h5>B - The Creation </h5>
@@ -104,6 +104,7 @@ Along with it, as displayed in the image below, some usefull information about t
 <img width="751" alt="ApiScopeCreate" src="https://user-images.githubusercontent.com/71494857/136756378-db94aa42-4e57-4d8e-989d-b023cd49f030.PNG">
 
 Upon valid creation, you will be prompted with a validation message:
+<br/>
 <img width="627" alt="ApiScopeSuccess" src="https://user-images.githubusercontent.com/71494857/136757410-8655b64f-d0c0-4984-8035-ca9e7ea5619a.PNG">
 
 <h5>C - The Update </h5>
@@ -112,31 +113,38 @@ Your will, once again, be prompted with a validation message.
 
 <h5>D - The Deletion </h5>
 On the displayed list of your resource, if you choose to click on the red bin icons in the "Actions" column, you will be taken to the view below, asking you to validate your wish to delete this resource a second time: 
+<br/>
 <img width="958" alt="ApiScopeDelete" src="https://user-images.githubusercontent.com/71494857/136759270-13b4998d-bf90-4e8d-b694-2b59ab461989.PNG">
  Once done, and as always, a validation message will be prompted to you.<br/>
  
  
 <h4>2 - Identity Resource </h4> 
 The management of the Identity Resources mostly follow the same flow. Only difference being in the create method. In order to create the claim for your Identity resource, you are given the ability to create and/or remove tags representing the desired claims. To add one, type in the corresponding bar and press "Enter". To remove it, click on little arrow being part of the tag. 
+<br/>
  <img width="924" alt="IdentityResourceCreate" src="https://user-images.githubusercontent.com/71494857/136760872-afcb8988-ad0e-4ed0-a28f-4948d185485a.PNG">
   
 <h4>3 - Clients </h4> 
 The flow is once more mostly similar, the difference being again in the create method.<br/>
 The form is splitted in three main sections. The first one, being, the "Basic" one lets you define your Id, Name and Secret for this Client. As written in the picture bellow, take note of the Secret you will wish to define, as it won't be available anywhere else later.  
-<img width="762" alt="ClientCreate" src="https://user-images.githubusercontent.com/71494857/136762879-a80529f1-e942-4d9d-b961-a8302021b478.PNG">
+<br/>
+<img width="632" alt="Client" src="https://user-images.githubusercontent.com/71494857/137880807-7dd2e0f4-0ca4-45ce-bfbd-56164a548f6c.PNG">
 
 The second section lets you define the URIs used by the client:
 <img width="722" alt="ClientCreateUri" src="https://user-images.githubusercontent.com/71494857/136764134-fa9fe631-f856-48ce-9733-0bbe6227391e.PNG">
 
-The third and final section lets you define the Grants and Scopes of your Client.<br/>
+The third lets you define the Grants and Scopes of your Client.<br/>
 The grant types correspond to the default one provided by the IdentityServer Documentation. The clickable Scopes are also based on the default ones of the documentation.<br/>
 Finally, for a more customizable approach, you can create your own custom scopes. 
+<br/>
 <img width="736" alt="ClientCreateGrantAndScope" src="https://user-images.githubusercontent.com/71494857/136764803-be05a04c-c5c0-400a-9ac1-774875cc640e.PNG">
 
-
+The fourth and final section let's you manage the way your application deals with refresh token. Do I want a refresh token mechanism to be impletemented? Should it update the relatives claims on update? How long do I want the refresh token to be valid? All that can be dealt with right here. 
+<br/>
+<img width="613" alt="RefreshToken" src="https://user-images.githubusercontent.com/71494857/137881669-19c20d9d-a4bb-4c61-b152-cadd202e95fb.PNG">
 <h4>4 - Users & Roles </h4>
 We are Lastly going to discuss the about how to manage your Roles and Users on the server. <br/>
 From the Admin home page, if you decide to click on the last section, you will taken to a menu offering you two choices: 
+<br/>
 <img width="960" alt="UsersAndRoles" src="https://user-images.githubusercontent.com/71494857/136765470-bd4711fb-d5c1-4325-975a-d7f0791bf6cd.PNG">
 
 The User section will give you the capacities to create new user without the need of a proper flow following the Register method. You will also have the ability to add your newly created user to the roles you built on your server. It goes without saying that you will be able to update and delete those users as you wish. <br/>
