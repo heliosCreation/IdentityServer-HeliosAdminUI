@@ -138,7 +138,7 @@ Finally, for a more customizable approach, you can create your own custom scopes
 <br/>
 <img width="736" alt="ClientCreateGrantAndScope" src="https://user-images.githubusercontent.com/71494857/136764803-be05a04c-c5c0-400a-9ac1-774875cc640e.PNG">
 
-The fourth and final section let's you manage the way your application deals with token expiracy and refresh token. Do I want a refresh token mechanism to be impletemented? Should it update the relatives claims on update? How long do I want the refresh token to be valid? All that can be dealt with right here. 
+The fourth and final section let's you manage the way your application deals with token expiracy and refresh token. Do I want a refresh token mechanism to be impletemented? Should it update the relatives claims on update? How long do I want the access token to be valid? All that can be dealt with right here. 
 <br/>
 <img width="613" alt="RefreshToken" src="https://user-images.githubusercontent.com/71494857/137881669-19c20d9d-a4bb-4c61-b152-cadd202e95fb.PNG">
 <h4>4 - Users & Roles </h4>
