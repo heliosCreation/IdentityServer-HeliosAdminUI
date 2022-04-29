@@ -148,7 +148,7 @@ From the Admin home page, if you decide to click on the last section, you will t
 <img width="960" alt="UsersAndRoles" src="https://user-images.githubusercontent.com/71494857/136765470-bd4711fb-d5c1-4325-975a-d7f0791bf6cd.PNG">
 
 The User section will give you the capacities to create new user without the need of a proper flow following the Register method. You will also have the ability to add your newly created user to the roles you built on your server. It goes without saying that you will be able to update and delete those users as you wish. <br/>
-Below, a caption of the User creation form:
+Below, a caption of the User creation form:<br/>
 <img width="678" alt="UserCreate" src="https://user-images.githubusercontent.com/71494857/136766093-54c04953-f349-46ef-9bde-bf306428fb52.PNG">
 
 And finally, the Role section. Three possibilities are also given to you here. Creating new roles, Listing them, and deleting them.<br/>
